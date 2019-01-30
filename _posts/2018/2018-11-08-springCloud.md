@@ -243,7 +243,7 @@ hi skycrumbing ,i am from port:8763
 ```  
 - 启动service-hi，eureka-server工程，它的端口为8763；将service-hi的配置文件的端口改为8762,并再次启动，再启动（在启动配置中将single instance only的勾选去掉），这时你会发现：service-hi在eureka-server注册了2个实例，这就相当于一个小的集群。
 - 写一个controller，在controller中用调用HelloService 的方法，代码如下  
-```
+```  
 	/**
 	 * Created by Administrator on 2018/9/19 0019.
 	 */
