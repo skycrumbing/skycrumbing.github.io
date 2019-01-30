@@ -244,9 +244,6 @@ hi skycrumbing ,i am from port:8763
 - 启动service-hi，eureka-server工程，它的端口为8763；将service-hi的配置文件的端口改为8762,并再次启动，再启动（在启动配置中将single instance only的勾选去掉），这时你会发现：service-hi在eureka-server注册了2个实例，这就相当于一个小的集群。
 - 写一个controller，在controller中用调用HelloService 的方法，代码如下  
 ```  
-	/**
-	 * Created by Administrator on 2018/9/19 0019.
-	 */
 	//  一个服务注册中心，eureka server,端口为8761 service-hi工程跑了两个实例，端口分别为8762,8763，
 	//  分别向服务注册中心注册 sercvice-ribbon端口为8764,向服务注册中心注册 当sercvice-ribbon通过restTemplate
 	//  调用service-hi的hi接口时，因为用ribbon进行了负载均衡，会轮流的调用service-hi：8762和8763 两个端口的hi接口；
@@ -335,9 +332,6 @@ hi skycrumbing ,i am from port:8762
 同时zuul也可以实现过滤的作用，可以做安全验证。  
 - 增加MyFilter类  
 ```
-	/**
-	 * Created by Administrator on 2018/9/20 0020.
-	 */
 	//zuul不仅只是路由，并且还能过滤，做一些安全验证
 	@Component
 	public class MyFilter extends ZuulFilter {
