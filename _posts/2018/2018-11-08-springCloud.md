@@ -47,7 +47,7 @@ description: 微服务架构的概念以及搭建。
     </modules>
 ```
 - 然后创建1个model作为服务注册中心，即eureka-server  
-eureka-server的pom文件:
+eureka-server的pom文件:  
 ```
 <parent>
 	<groupId>SpringCloudDemo</groupId>
@@ -69,8 +69,8 @@ eureka-server的pom文件:
 		<artifactId>spring-cloud-config-server</artifactId>
 	</dependency>
 </dependencies>
-```  
-- 在eureka-serve的springboot启动类中添加@EnableEurekaServer注解启动服务注册中心，并增添appication.yml 配置文件  
+```
+- 在eureka-serve的springboot启动类中添加@EnableEurekaServer注解启动服务注册中心，并增添appication.yml 配置文件   
 ```
 server:
   port: 8889
@@ -87,7 +87,7 @@ spring:
     name: eurka-server
 ```
 eureka.client.registerWithEureka：false和fetchRegistry：false来表明自己是一个eureka server  
-- 启动eureka-server，打开http://localhost:8889，出现如下界面
+- 启动eureka-server，打开http://localhost:8889，出现如下界面  
 ![界面显示](\assets\img\springcloud_1.jpg) 
 - 服务注册中心搭建好了之后我们就需要创建一个服务提供者了，然后创建1个model作为服务提供者，即eureka-hi  
 eureka-hi的pom文件  
@@ -196,7 +196,7 @@ spring:
   application:
     name: service-ribbon
 ```
-- 在工程的启动类中,通过@EnableDiscoveryClient向服务中心注册；并且向程序的ioc注入一个bean: restTemplate;并通过@LoadBalanced注解表明这个restRemplate开启负载均衡的功能。
+- 在工程的启动类中,通过@EnableDiscoveryClient向服务中心注册；并且向程序的ioc注入一个bean: restTemplate;并通过@LoadBalanced注解表明这个restRemplate开启负载均衡的功能。  
 ```
 //通过RestTemplate+Ribbon去消费服务
 @SpringBootApplication
@@ -219,7 +219,7 @@ public class ServiceRibbonApplication {
 	}
 }
 ```
-- 写一个测试类HelloService，通过之前注入ioc容器的restTemplate来消费service-hi服务的“/hi”接口，在这里我们直接用的程序名替代了具体的url地址，在ribbon中它会根据服务名来选择具体的服务实例，根据服务实例在请求的时候会用具体的url替换掉服务名，代码如下：
+- 写一个测试类HelloService，通过之前注入ioc容器的restTemplate来消费service-hi服务的“/hi”接口，在这里我们直接用的程序名替代了具体的url地址，在ribbon中它会根据服务名来选择具体的服务实例，根据服务实例在请求的时候会用具体的url替换掉服务名，代码如下：  
 ```
 @Service
 public class HelloService {
@@ -333,7 +333,7 @@ hi skycrumbing ,i am from port:8763
 hi skycrumbing ,i am from port:8762  
 这说明zuul起到了路由的作用。  
 同时zuul也可以实现过滤的作用，可以做安全验证。  
-- 增加MyFilter类
+- 增加MyFilter类  
 ```
 /**
  * Created by Administrator on 2018/9/20 0020.
