@@ -263,7 +263,7 @@ hi skycrumbing ,i am from port:8763
  这时会轮流显示  
 hi skycrumbing ,i am from port:8763  
 hi skycrumbing ,i am from port:8762  
-- 路由网关
+### 路由网关
 这里使用了zuul组件完成路由的转发和过滤。  
 - 创建1个model，service-zuul并引入如下依赖  
 ```
