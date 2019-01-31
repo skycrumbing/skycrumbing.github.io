@@ -2,7 +2,6 @@
 layout: post
 title: springboot前后端分离
 tags:
-- spring
 - springBoot
 categories: spring
 description: springboot前后端分离
