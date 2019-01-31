@@ -1,10 +1,10 @@
 ---
 layout: post
-title: springBoot
+title: springboot前后端分离
 tags:
 - spring
 - springBoot
-categories: micro-services
+categories: spring
 description: springboot前后端分离
 ---
 ## springboot
