@@ -21,7 +21,7 @@ description: vue组件传值
 ```
 	<template>
 		<div>
-			<p>从父组件得到3:{ {childMessage } }/</p>
+			<p>从父组件得到:{ {childMessage } }/</p>
 		</div>
 	</template>
 
@@ -70,7 +70,7 @@ description: vue组件传值
 	<template>
 		<div>
 		  <h4>子组件向父组件传递值</h4>
-		  <div>父组件传递过来的:{{getFromP}}</div>
+		  <div>父组件传递过来的:{ {getFromP} }</div>
 		  <input type="text" v-model="sendToPData"/>
 		  <!--点击事件-->
 		  <button @click="sendMsgToParent">向父组件传值</button>
@@ -105,7 +105,7 @@ description: vue组件传值
 			<div id="app">
 			  <!--父组件中的子标签中监听该自定义事件并添加一个响应该事件的处理方法-->
 			  <child-to-p :getFromP="parentMsg" @listenToChildEvent="showMsgFromChild"></child-to-p>
-			  <div>从子组件传递过来的值:{{dataFromChild}}</div>
+			  <div>从子组件传递过来的值:{ {dataFromChild} }</div>
 			</div>
 		</div>
 	</template>
