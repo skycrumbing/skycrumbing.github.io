@@ -3,6 +3,7 @@ layout: post
 title: springCloud
 tags:
 - springCloud
+- springboot
 categories: micro-services
 description: 微服务架构的概念以及搭建。
 ---
