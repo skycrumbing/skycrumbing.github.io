@@ -1,8 +1,7 @@
-﻿---
+---
 layout: post
 title: vue组件传值
 tags:
-- js
 - vue
 categories: webpage
 description: vue组件传值
