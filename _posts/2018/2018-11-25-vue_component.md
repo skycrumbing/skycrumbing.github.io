@@ -3,6 +3,7 @@ layout: post
 title: vue组件传值
 tags:
 - vue
+- js
 categories: webpage
 description: vue组件传值
 ---
