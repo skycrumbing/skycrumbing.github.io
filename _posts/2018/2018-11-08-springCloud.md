@@ -136,7 +136,7 @@ eureka-hi的pom文件
 配置文件如下（需要指明spring.application.name,这个很重要，这在以后的服务与服务之间相互调用一般都是根据这个name。）:  
 ```
 	server:
-	  port: 8762
+	  port: 8763
 	spring:
 	  application:
 	    name: service-hi
