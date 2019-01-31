@@ -21,7 +21,7 @@ description: vue组件传值
 ```
 	<template>
 		<div>
-			<p>从父组件得到:{ {childMessage } }/</p>
+			<p>从父组件得到:{ {childMessage } }</p>
 		</div>
 	</template>
 
