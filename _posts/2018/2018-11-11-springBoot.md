@@ -13,7 +13,7 @@ Spring Boot是由Pivotal团队提供的全新框架，其设计目的是用来**
 
 ## restful
 RESTful风格：一种软件架构风格。从MVC到前后端完全分离。首先从浏览器发送AJAX请求，然后服务端接受该请求并返回JSON数据返回给浏览器，最后在浏览器中进行界面渲染服务端将内部资源发布**REST服务**，客户端通过URL来定位这些资源并通过HTTP协议来访问它们。(前后端分离架构不一定是restful风格，但是restful风格一定是前后端分离的)
-## Springboot如何实现restful风格
+## Springboot如何实现前后端分离
 主要改变在controller层，原先的controller与前端完成彻底分离，只是进行json数据的传输
 - **注解的改变，@Controller需要变成RestController**  
 使用@Controller 注解，在对应的方法上，视图解析器可以解析return 的jsp,html页面，并且跳转到相应页面 若返回json等内容到页面，则需要加@ResponseBody注解  
