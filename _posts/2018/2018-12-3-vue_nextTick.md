@@ -1,8 +1,9 @@
-﻿---
+---
 layout: post
 title: vue之$nextTick()
 tags:
 - vue
+- js
 categories: webpage
 description: vue之$nextTick()
 ---
