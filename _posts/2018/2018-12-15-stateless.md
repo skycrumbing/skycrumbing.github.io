@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: 无状态思想
 tags:
