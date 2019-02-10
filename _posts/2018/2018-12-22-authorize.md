@@ -31,10 +31,10 @@ description: 第三方授权
 - fragment 的改变不会触发浏览器刷新页面，但是会生成浏览历史；  
 - fragment 会被浏览器根据文件媒体类型（MIME type）进行对应的处理；
 - Google 的搜索引擎会忽略 # 及其后面的字符串。  
-**使用Fragment的目的：**只有Javascript 能访问它，并且它不会再次通过http request 发到别的服务器， 这是为了提高安全性  
+**使用Fragment的目的：** 只有Javascript 能访问它，并且它不会再次通过http request 发到别的服务器， 这是为了提高安全性  
 信用卡管家要获取用户网易邮箱的信息为例展示隐私许可步骤    
 ![隐式许可](\assets\img\authorize_1.jpg)  
-**问题：**这个token 以明文的方式发送给了用户的浏览器， 虽然是https ，不会被别人窃取，可是浏览器的历史记录或者访问日志中就能找到还是存在安全问题。
+**问题：** 这个token 以明文的方式发送给了用户的浏览器， 虽然是https ，不会被别人窃取，可是浏览器的历史记录或者访问日志中就能找到还是存在安全问题。
 ## Authorization Code Grant
 授权码许可  
 和之前的思路类似，只是引用了一个授权码(authorization code)，当用户用网易账号登录的时候， 网易认证中心这一次不直接发token,而是发一个授权码(authorization code)，信用卡管家服务器端获得authorization code，在后台再次访问网易认证中心，这次才能获得真正的token。  
