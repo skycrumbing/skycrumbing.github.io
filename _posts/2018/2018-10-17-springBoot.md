@@ -66,7 +66,7 @@ RESTful风格：一种软件架构风格。从MVC到前后端完全分离。首�
 			return  this;
 		}
 ```
-- 3，	**将元数据动态的添加进去，这就涉及Spring的aop了，增加一个处理异常的切面，他会在@requestMap注解的方法上的入口自动进行插入**
+- **将元数据动态的添加进去，这就涉及Spring的aop了，增加一个处理异常的切面，他会在@requestMap注解的方法上的入口自动进行插入**
 ```
 	@ControllerAdvice  //控制器增强,和@ExceptionHandler、@InitBinder、@ModelAttribute 等注解配合使用
 	@ResponseBody //返回json
