@@ -19,7 +19,7 @@ RESTful风格：一种软件架构风格。从MVC到前后端完全分离。首�
 使用@Controller 注解，在对应的方法上，视图解析器可以解析return 的jsp,html页面，并且跳转到相应页面 若返回json等内容到页面，则需要加@ResponseBody注解  
 @RestController注解相当于@ResponseBody ＋ @Controller合在一起的作用。  
 @RestController不能解析return 的jsp,html页面  
-- **Json数据的封装**
+- **Json数据的封装**  
 除了封装要发送的数据外还要添加其他元数据，如HTTP状态信息表示服务器响应状态信息，要将他们封装到一个对象中
 ```
 	@Data
