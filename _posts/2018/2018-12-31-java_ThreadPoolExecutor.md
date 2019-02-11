@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: JAVA线程池ThreadPoolExecutor
 tags:
@@ -21,8 +21,7 @@ ThreadPoolExecutor是java线程池的核心类，有三个关键属性：
 ### execute(Runnable command)  
 1，当线程池中的线程数小于corePoolSize 时，新提交的任务直接新建一个线程执行任务（不管是否有空闲线程）  
 2，当线程池中的线程数等于corePoolSize 时，新提交的任务将会进入阻塞队列（workQueue）中，等待线程的调度  
-3，当阻塞队列满了以后，如果corePoolSize < maximumPoolSize ,则新提交的任务会新建线程执行任务，直至线程数达到maximumPoolSize  
-当线程数达到maximumPoolSize 时，新提交的任务会由(饱和策略)管理  
+3，当阻塞队列满了以后，如果corePoolSize < maximumPoolSize ,则新提交的任务会新建线程执行任务，直至线程数达到maximumPoolSize当线程数达到maximumPoolSize 时，新提交的任务会由(饱和策略)管理  
 ```
  	public void execute(Runnable command) {
         if (command == null)
