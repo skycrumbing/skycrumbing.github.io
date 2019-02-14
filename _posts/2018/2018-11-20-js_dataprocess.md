@@ -24,7 +24,7 @@ description: js数据处理
 ```
 -  **js替换或者删除一个或多个元素** 
 
-1，splice(index,len,[item]):该方法会改变原始数组长度。  
+**splice(index,len,[item]):该方法会改变原始数组长度。**
 index:数组开始下标  
 len: 替换/删除的长度  
 item:替换的值，删除操作的话 item为空    
@@ -49,7 +49,7 @@ item:替换的值，删除操作的话 item为空
 	console.log(arr);  
 	//['a','ttt','b','c','d'] 表示在下标为1处添加一项'ttt'
 ```
-2，delete方法删除掉数组中的元素后，会把该下标出的值置为undefined,数组的长度不会变  
+**delete：删除掉数组中的元素后，会把该下标出的值置为undefined,数组的长度不会变** 
 ```
 	var arr = ['a','b','c','d']; 
 	delete arr[1]; 
