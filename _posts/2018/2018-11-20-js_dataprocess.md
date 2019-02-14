@@ -25,7 +25,9 @@ description: js数据处理
 -  **js替换或者删除一个或多个元素** 
 
 1，splice(index,len,[item]):该方法会改变原始数组长度。  
-index:数组开始下标 len: 替换/删除的长度 item:替换的值，删除操作的话 item为空  
+index:数组开始下标  
+len: 替换/删除的长度  
+item:替换的值，删除操作的话 item为空    
 删除  
 ```
 	var arr2 = ['a','b','c','d'] 
