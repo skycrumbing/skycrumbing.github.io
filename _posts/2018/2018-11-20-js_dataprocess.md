@@ -11,7 +11,7 @@ description: js数据处理
 <!-- more -->
 
 ## 数组操作
--  **js判断一个字符串是以某个字符串开头**  
+-  **js判断一个字符串是否包含某个字符串**  
 ```
 	var fdStart = strCode.indexOf("ssss");
 	if(fdStart == 0){
