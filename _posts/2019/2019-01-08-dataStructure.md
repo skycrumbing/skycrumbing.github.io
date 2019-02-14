@@ -12,7 +12,7 @@ description: java数据结构
 <!-- more -->
 
 ## List
-ArrayList 优势在于访问速度（即查找get和更新set）和存储空间（没有指针），**并不包括在尾部插入数据。**  
+ArrayList 优势在于访问速度（即查找get和更新set）以及存储空间（没有指针），**并不包括在尾部插入数据。**  
 因为linkedList是双列表。索引该列表中的操作将从头或者尾遍历列表，使用更接近指定索引的那个。所以add(rear)时间复杂度都是O(1)，即常数时间  
 ## Map 
 ### 普通map（LinearMap）  
