@@ -13,7 +13,7 @@ excel导出可以在前端进行，也可以在后端进行，本篇主要针对
 
 ## 三种方式  
 HSSFWorkbook：针对03前的版本，扩展名为.xls。一般不用这个。  
-XSSFWorkbook：针对03前的版本，扩展名.xlsx。当数据过多会发生内存溢出。  
+XSSFWorkbook：针对03后的版本，扩展名.xlsx。当数据过多会发生内存溢出。  
 SXSSFWorkbook：通过将过多的数据写入临时文件的方式保证内存不会溢出。  
 ## 流程  
 1, 创建sheet  
