@@ -2,7 +2,7 @@
 layout: post
 title: 数据结构
 tags:
-- java
+- foundation
 categories: dataStructure
 description: java数据结构
 ---
