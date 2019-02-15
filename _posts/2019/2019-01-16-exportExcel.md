@@ -126,12 +126,18 @@ excel导出可以在前端进行，也可以在后端进行，本篇主要针对
 			workbook.write(out);
 			out.close();
 		}
-
+	
+   		 /**
+    		 * 创建单元格
+    		 */
 		private static void createCell(Row row, int cellNum, String value) {
 			Cell cell = row.createCell(cellNum);
 			generateValue(value, cell);
 		}
-
+		
+   		 /**
+    		 * 生成标题
+    		 */
 		private static void genSheetHead(Sheet sheet, int rowNum, Map<Integer, Object> firstTitles) {
 			Row row = sheet.createRow(rowNum);
 			for(Integer i: firstTitles.keySet()){
@@ -141,6 +147,9 @@ excel导出可以在前端进行，也可以在后端进行，本篇主要针对
 			}
 		}
 
+   		 /**
+    		 * 在单元格中写入内容
+    		 */
 		private static void generateValue(Object object, Cell cell) {
 			if(object instanceof String){
 				cell.setCellValue((String) object);
