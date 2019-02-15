@@ -17,8 +17,9 @@ XSSFWorkbook：针对03前的版本，扩展名.xlsx。当数据过多会发生�
 SXSSFWorkbook：通过将过多的数据写入临时文件的方式保证内存不会溢出。  
 ## 流程  
 1, 创建sheet  
-1, 创建row    
-1, 创建cell    
+2, 创建row    
+3, 创建cell    
+4, 在cell创建写入内容     
 ## 创建模板test1.xlsx
 在C:\\Users\\Administrator\\Desktop下创建test1.xlsx  
 ![test1.xlsx](\assets\img\exportExcel_1.jpg)  
