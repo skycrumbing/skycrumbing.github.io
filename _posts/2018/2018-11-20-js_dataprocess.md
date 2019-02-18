@@ -11,7 +11,7 @@ description: js数据处理
 <!-- more -->
 
 ## 数组操作
--  **js判断一个字符串是否包含某个字符串**  
+### js判断一个字符串是否包含某个字符串    
 ```
 	var fdStart = strCode.indexOf("ssss");
 	if(fdStart == 0){
@@ -22,7 +22,7 @@ description: js数据处理
   	表示strCode包含sss字符串
 	}
 ```
--  **js替换或者删除一个或多个元素** 
+### js替换或者删除一个或多个元素  
 
 **splice(index,len,[item]):该方法会改变原始数组长度。**  
 index:数组开始下标  
