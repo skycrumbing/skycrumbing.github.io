@@ -64,10 +64,10 @@ description: 搜索引擎技术
 			productList.add("聚欧普照明led灯泡节能灯泡e27螺口球泡家用led照明单灯超亮光源");
 			Directory index = createIndex(analyzer, productList);
 
-			//删除所有索引
+			//删除序号为5索引
 	//		IndexWriterConfig config = new IndexWriterConfig(analyzer);
 	//		IndexWriter indexWriter = new IndexWriter(index, config);
-	//		indexWriter.deleteAll();
+	//		indexWriter.deleteDocuments(new Term("id","5"));
 	//		indexWriter.commit();
 	//		indexWriter.close();
 
@@ -111,11 +111,16 @@ description: 搜索引擎技术
 				System.out.print((i + 1));
 				//得到每个document的匹配度得分
 				System.out.print("\t" + scoreDoc.score);
-				//根据Field字段获得相应的值，这里的Field只有name
+				//根据Field字段获得相应的值
 				for (IndexableField f: fields){
-					TokenStream tokenStream = analyzer.tokenStream(f.name(), new StringReader(document.get(f.name())));
-					String fildContent = highlighter.getBestFragment(tokenStream,document.get(f.name()));
-					System.out.print("\t" + fildContent);
+					if ("name".equals(f.name())) {
+						TokenStream tokenStream = analyzer.tokenStream(f.name(), new StringReader(document.get(f.name())));
+						String fildContent = highlighter.getBestFragment(tokenStream,document.get(f.name()));
+						System.out.print("\t" + fildContent);
+					}
+					else {
+						System.out.print("\t" + document.get(f.name()));
+					}
 				}
 				System.out.println();
 			}
@@ -129,17 +134,20 @@ description: 搜索引擎技术
 			//创建索引write
 			IndexWriter writer = new IndexWriter(index, config);
 			//依次写入内存索引
+			int id = 0;
 			for(String name: productList){
-				addDoc(writer, name);
+				addDoc(writer, id, name);
+				id++;
 			}
 			writer.close();
 			return index;
 		}
 
-		private static void addDoc(IndexWriter writer, String name) throws IOException {
+		private static void addDoc(IndexWriter writer, int id,  String name) throws IOException {
 			//每条数据创建一个document
 			Document doc = new Document();
 			//将每个产品映射到name字段
+			doc.add(new TextField("id", String.valueOf(id), Field.Store.YES));
 			doc.add(new TextField("name", name, Field.Store.YES));
 			writer.addDocument(doc);
 		}
