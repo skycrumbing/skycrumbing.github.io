@@ -7,7 +7,7 @@ categories: java
 description: 搜索引擎技术
 ---
 ## 搜索引擎
-类似于百度，谷歌的搜索引擎技术，Java也提供了相关的搜索引擎工具包Lucene，而Solr和 ElasticSearch则是对Lucene进行封装后的搜索引擎服务器
+类似于百度，谷歌的搜索引擎技术，Java也提供了相关的搜索引擎工具包Lucene，而Solr和 ElasticSearch则是对Lucene进行封装后的搜索引擎服务器，可以将索引存在文件系统中，而不仅仅是在内存中操作  
 
 <!-- more -->
 
