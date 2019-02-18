@@ -17,10 +17,10 @@ Vue.$nextTick(callback)，当dom发生变化更新后执行的回调。
 ```
 	<template>
 	  <div class="hello">
-		<div ref="msgDiv">{{msg}}</div>
-		<div>setTimeout: {{msg1}}</div>
-		<div>$nextTick: {{msg2}}</div>
-		<div>正常情况: {{msg3}}</div>
+		<div ref="msgDiv">{ {msg } }</div>
+		<div>setTimeout: { {msg1} }</div>
+		<div>$nextTick: { {msg2} }</div>
+		<div>正常情况: { {msg3} }</div>
 		<button @click="changeMsg">BUTTON</button>
 	   </div>
 	</template>
