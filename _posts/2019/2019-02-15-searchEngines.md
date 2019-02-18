@@ -168,7 +168,7 @@ Solr被做成了 webapp形式，以tomcat的应用的方式启动，提供了可
 ### 查询索引数据  
 使用solr提供的java客户端工具包查询(网上搜索教程)  
 ## ElasticSearch  
-ElasticSearch也是基于Lucene封装的服务器  
+ElasticSearch也是基于Lucene封装的服务器，同样要安装中文分词插件  
 ### Kibana  
 Kibana是分析ElasticSearch服务器存储的索引数据以及导入数据的工具，其本质也是一个web服务器，并且提供的是基于restful风格的服务  
 ### java工具包
