@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: 搜索引擎技术
 tags:
