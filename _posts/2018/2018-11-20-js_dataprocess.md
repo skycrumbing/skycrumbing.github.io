@@ -12,7 +12,7 @@ description: js数据处理
 
 ## 数组操作
 -  **js判断一个字符串是否包含某个字符串**  
-```html
+```
 	var fdStart = strCode.indexOf("ssss");
 	if(fdStart == 0){
   	表示strCode是以ssss开头；
@@ -29,14 +29,14 @@ index:数组开始下标
 len: 替换/删除的长度  
 item:替换的值，删除操作的话 item为空    
 删除  
-```html
+```
 	var arr2 = ['a','b','c','d'] 
 	arr2.splice(1,2); 
 	console.log(arr2); 
 	//['a','d'] 
 ```
 替换  
-```html
+```
 	var arr2 = ['a','b','c','d']; 
 	arr2.splice(1,2,'ttt'); 
 	console.log(arr2);  
@@ -50,7 +50,7 @@ item:替换的值，删除操作的话 item为空
 	//['a','ttt','b','c','d'] 表示在下标为1处添加一项'ttt'
 ```
 **delete：删除掉数组中的元素后，会把该下标出的值置为undefined,数组的长度不会变** 
-```html
+```
 	var arr = ['a','b','c','d']; 
 	delete arr[1]; 
 	arr; 
@@ -58,7 +58,7 @@ item:替换的值，删除操作的话 item为空
 ```
 ## js整数取整
 -  **丢弃小数部分,保留整数部分**  
-```html
+```
 	parseInt(7/2) 
 ```
 -  **向上取整,有小数就整数部分加1**  
@@ -66,15 +66,15 @@ item:替换的值，删除操作的话 item为空
 	 Math.ceil(7/2)  
 ```
 -  **四舍五入**  
-```html
+```
 	Math.round(7/2) 
 ```
 -  **向下取整，丢弃小数部分**  
-```html
+```
 	Math.floor(7/2) 
 ```
 ## js时间操作
-```html
+```
 	<script type="text/javascript">
 
 		var d=new Date()
