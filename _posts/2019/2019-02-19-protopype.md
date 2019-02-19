@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: 原型设计模式
 tags:
