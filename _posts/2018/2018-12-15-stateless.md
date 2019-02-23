@@ -3,7 +3,7 @@ layout: post
 title: 无状态思想
 tags:
 - programmingThinking
-categories: java
+categories: spring
 description: 无状态思想
 ---
 ## 无状态
