@@ -232,7 +232,7 @@ synchronized取得的锁都是对象锁，而不是把方法当成锁。如果�
 	 }
 ```
 **结果**  
-![结果](\assets\img\thread_4.jpg)  
+![结果](\assets\img\synchronized_4.jpg)  
 **同步不具有继承性**
 父类带synchronized关键字的方法被子类重写了，还是需要在方法前加synchronized关键字  
 ## 修饰语句块
@@ -331,7 +331,7 @@ synchronized取得的锁都是对象锁，而不是把方法当成锁。如果�
 	}
 ```
 **结果**  
-![结果](\assets\img\thread_5.jpg)  
+![结果](\assets\img\synchronized_5.jpg)  
 ### Synchronized(this)修饰需要同步的代码块
 1，Synchronized(this)代码块持有当前对象锁。不在synchronized代码块中就异步执行，在synchronized代码块中就是同步执行  
 2，当一个对象访问synchronized(this)代码块时，其他线程对同一个对象中所有其他synchronized(this)代码块代码块的访问将被阻塞  
@@ -360,7 +360,7 @@ synchronized取得的锁都是对象锁，而不是把方法当成锁。如果�
     }
 ```
 **结果**  
-![结果](\assets\img\thread_6.jpg)  
+![结果](\assets\img\synchronized_6.jpg)  
 注意：因为数据类型String的常量池属性，所以synchronized(string)在使用时某些情况下会出现一些问题，比如两个线程运行 synchronized(“abc”)｛ ｝和 synchronized(“abc”)｛ ｝修饰的方法时，这两个线程就会持有相同的锁，导致某一时刻只有一个线程能运行。所以尽量不要使用synchronized(string)而使用synchronized(object)
 
 
