@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: synchronized关键字
 tags:
@@ -77,7 +77,7 @@ synchronized是一个Java关键字。是一种同步锁和可重入锁。可以�
 	}
 ```
 结果正常，线程1先执行完，线程二再执行  
-![结果](\assets\img\synchronized_1.jpg)
+![结果](\assets\img\synchronized_1.jpg)  
 **多个线程访问多个对象**  
 ```
 	package com.tantao;
