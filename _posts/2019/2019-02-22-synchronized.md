@@ -294,7 +294,7 @@ synchronized取得的锁都是对象锁，而不是把方法当成锁。如果�
 	}
 
 	/*
-	 *线程继续的具体代码
+	 *线程执行的具体代码
 	 */
 	class Task{
 		private String getData1;
