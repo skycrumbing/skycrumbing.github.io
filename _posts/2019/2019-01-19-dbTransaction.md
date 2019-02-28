@@ -1,10 +1,10 @@
-﻿---
+---
 layout: post
 title: 数据库事务
 tags:
 - spring
 categories: database
-description: java实现rmi
+description: 数据库事务
 ---
 ## 事务机制（ACID）
 **原子性**： 事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不执行；  
@@ -26,7 +26,7 @@ description: java实现rmi
 这就导致A的提交被覆盖  
 **不可重复读**：TA事务第一次读取数据之后TB事务修改了数据并提交了，事务TA再次读取数据导致数据不一致。  
 **幻读**：TA事务第一次读取数据之后TB事务添加了数据并提交了，事务TA再次读取数据导致数据多了一些内容就像幻觉一样。  
-为了解决事务并发带来的问题，数据库定义了几种不同的事务隔离级别  
+**为了解决事务并发带来的问题，数据库定义了几种不同的事务隔离级别**    
 **READ_UNCOMMITTED（未提交读）**: 最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读  
 **EAD_COMMITTED（提交读）**: 允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生  
 **REPEATABLE_READ（可重复读）**: 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。  
@@ -43,7 +43,7 @@ Spring给数据持久化话框架（hibernate，mybatis，JDBC）提供事务管
 提交事务  
 回滚事务  
 几个常见的接口实现类:  
-![RMI流程](\assets\img\dbTransaction_1.png)  
+![事务实现类](\assets\img\dbTransaction_1.png)  
 ### TransactionDefinition接口  
 这个接口主要是定义事务属性事务属性包括5个方面:  
 隔离级别，传播行为，回滚规则，是否只读，事务超时  
@@ -55,16 +55,16 @@ Spring给数据持久化话框架（hibernate，mybatis，JDBC）提供事务管
 **TransactionDefinition.ISOLATION_SERIALIZABLE**: 对应数据库隔离级别ERIALIZABLE  
 #### Spring事务传播行为  
 当一个事务方法调用另一个事务方法时事务的存在机制  
-**支持当前事务的情况**：
+**支持当前事务的情况**：  
 **TransactionDefinition.PROPAGATION_REQUIRED**： 如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。  
 **TransactionDefinition.PROPAGATION_SUPPORTS**： 如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。  
 **TransactionDefinition.PROPAGATION_MANDATORY**： 如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。  
-  
+    
 **不支持当前事务的情况：**  
 **TransactionDefinition.PROPAGATION_REQUIRES_NEW**： 创建一个新的事务，如果当前存在事务，则把当前事务挂起。  
 **TransactionDefinition.PROPAGATION_NOT_SUPPORTED**： 以非事务方式运行，如果当前存在事务，则把当前事务挂起。  
 **TransactionDefinition.PROPAGATION_NEVER**： 以非事务方式运行，如果当前存在事务，则抛出异常。  
-  
+    
 **事务嵌套情况：**  
 **TransactionDefinition.PROPAGATION_NESTED**： 如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于TransactionDefinition.PROPAGATION_REQUIRED。外部事务的回滚也会导致嵌套子事务的回滚。内层事务操作失败并不会引起外层事务的回滚。  
 #### 事务超时属性  
