@@ -1,10 +1,10 @@
-﻿---
+---
 layout: post
 title: 数据库事务
 tags:
 - spring
 categories: database
-description: java实现rmi
+description: 数据库事务
 ---
 ## 事务机制（ACID）
 **原子性**： 事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不执行；  
