@@ -2,8 +2,8 @@
 layout: post
 title: 无状态思想
 tags:
-- programmingThinking
-categories: spring
+- springboot
+categories: frame
 description: 无状态思想
 ---
 ## 无状态
