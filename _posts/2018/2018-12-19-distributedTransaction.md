@@ -4,7 +4,8 @@ title: 分布式事务
 tags:
 - transaction
 - MQ
-categories: micro-services
+- micro-services
+categories: database
 description: 分布式事务
 ---
 ## 分布式事务
