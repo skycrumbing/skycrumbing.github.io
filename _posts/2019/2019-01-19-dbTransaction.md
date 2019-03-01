@@ -3,6 +3,7 @@ layout: post
 title: 数据库事务
 tags:
 - spring
+- transaction
 categories: database
 description: 数据库事务
 ---
