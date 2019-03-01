@@ -4,7 +4,8 @@ title: springCloud
 tags:
 - springCloud
 - springboot
-categories: micro-services
+- micro-services
+categories: frame
 description: 微服务架构的概念以及搭建。
 ---
 ## 微服务
