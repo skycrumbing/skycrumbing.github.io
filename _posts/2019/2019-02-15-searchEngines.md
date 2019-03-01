@@ -1,9 +1,7 @@
 ---
 layout: post
 title: 搜索引擎技术
-tags:
-- tool
-categories: java
+categories: tool
 description: 搜索引擎技术
 ---
 ## 搜索引擎
