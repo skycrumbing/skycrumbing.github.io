@@ -3,7 +3,7 @@ layout: post
 title: springboot前后端分离
 tags:
 - - springboot
-categories: frame
+categories: framework
 description: springboot前后端分离
 ---
 ## springboot
