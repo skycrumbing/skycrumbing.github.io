@@ -3,6 +3,7 @@ layout: post
 title: synchronized关键字
 tags:
 - thread
+- keyword
 categories: java
 description: java线程
 ---
