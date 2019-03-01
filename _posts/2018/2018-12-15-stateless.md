@@ -3,7 +3,7 @@ layout: post
 title: 无状态思想
 tags:
 - springboot
-categories: frame
+categories: thinking
 description: 无状态思想
 ---
 ## 无状态
