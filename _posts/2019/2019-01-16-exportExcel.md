@@ -1,9 +1,7 @@
 ---
 layout: post
 title: 后台导出excel
-tags:
-- tool
-categories: java
+categories: tool
 description: 后台导出excel
 ---
 ## excel导出
