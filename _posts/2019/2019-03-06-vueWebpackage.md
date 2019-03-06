@@ -21,7 +21,7 @@ src=/static/js/vendor.78b0c67da9f7ca9ebf03.js
 如下：  
 ![资源路径解决办法](\assets\img\vue_webpackage_2.jpg)  
 ## 字体图标的引入问题  
-静态资源引入问题解决之后用浏览器打开index.html，结果图标字体依旧无法显示，在浏览器控制台发现他们这些字体图标的相对路径都是以./static/css/static/fonts开头。  
+静态资源引入问题解决之后用浏览器打开index.html，结果图标字体依旧无法显示，在浏览器控制台发现这些字体图标的相对路径都是以./static/css/static/fonts开头。  
 而正确路径应该是以./static/fonts开头。  
 **解决方法**：  
 在项目下的build/utils.js添加publicPath: '../../'  
