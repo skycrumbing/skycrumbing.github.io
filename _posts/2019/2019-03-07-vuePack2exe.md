@@ -13,7 +13,7 @@ description: Vue脚手架项目打包成桌面应用
 
 ## Electron  
 Electron就是可以让你用Javascript、HTML、CSS来编写运行于Windows、macOS、Linux系统之上的桌面应用的库。  
-**使用方式**：  
+## 使用方式    
 1，首先快速创建一个官方示例的  
 ```
 	git clone https://github.com/electron/electron-quick-start
