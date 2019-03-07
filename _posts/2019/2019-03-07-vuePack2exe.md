@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: Vue脚手架项目打包成桌面应用
 tags:
