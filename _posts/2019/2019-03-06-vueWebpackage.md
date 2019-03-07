@@ -26,5 +26,5 @@ src=/static/js/vendor.78b0c67da9f7ca9ebf03.js
 **解决方法**：  
 在项目下的build/utils.js添加publicPath: '../../'  
 如下：  
-![子体图标路径解决办法](\assets\img\vue_webpackage_2.jpg)  
+![子体图标路径解决办法](\assets\img\vue_webpackage_3.jpg)  
 
