@@ -7,7 +7,7 @@ tags:
 categories: webpage
 description: Vue脚手架项目打包成桌面应用
 ---
-本篇内容基于前面所讲的部分：Vue脚手架项目打包。即已经在项目路径下生成dist文件夹的基础上打包成exe桌面程序。使用的是基于Electron的打包工具Electron-packager。  
+本篇内容基于前面所讲的部分：[Vue脚手架项目打包](https://skycrumbing.github.io/webpage/2019/03/06/vueWebpackage/ "Vue脚手架项目打包")。即已经在项目路径下生成dist文件夹的基础上打包成exe桌面程序。使用的是基于Electron的打包工具Electron-packager。  
 
 <!-- more -->
 
