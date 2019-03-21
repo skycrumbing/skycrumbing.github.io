@@ -19,7 +19,7 @@ description: nginx部署个人博客
 	source:       .
 	destination:  ./_site
 ```  
-3，在羡慕路径下打开cmd，运行bundle exec jekyll server,若失败请查看相关环境和依赖是否配置完成  
+3，在项目路径下打开cmd，运行bundle exec jekyll server,若失败请查看相关环境和依赖是否配置完成  
 4，命令执行成功后会有提示，可以直接在本地运行项目，同时在项目路径下生成_site文件夹，里面是编译成功的静态文件
 5，可以将_site移动到任何一个路径下，如c:/blog/_site  
 6，打开nginx的配置文件nginx.conf，添加如下配置
