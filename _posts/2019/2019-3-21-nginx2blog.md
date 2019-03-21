@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: nginx部署个人博客
 categories: webpage
