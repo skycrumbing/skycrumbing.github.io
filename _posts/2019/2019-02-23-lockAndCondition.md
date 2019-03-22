@@ -75,7 +75,7 @@ finall语句块中释放锁的目的是保证获取到锁之后，最终能够�
 	}
 ```
 结果  
-![结果](\assets\img\lockAndCondition_1.jpg)  
+![结果](https://skycrumbing.github.io\assets\img\lockAndCondition_1.jpg)  
 ## Condition接口  
 synchronized关键字与wait()和notify/notifyAll()方法相结合可以实现等待/通知机制。  
 同样Lock和Condition也能够实现，并且灵活性也更高。  
