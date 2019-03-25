@@ -1,10 +1,10 @@
-﻿---
+---
 layout: post
 title: 算法笔记
 tags:
 - algorithms
 categories: leetcode
-description: nginx部署个人博客
+description: 算法笔记
 ---
 LeetCode算法笔记，持续更新...(*￣０￣)ノ  
 
