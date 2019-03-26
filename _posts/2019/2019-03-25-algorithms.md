@@ -28,31 +28,27 @@ LeetCode算法笔记，持续更新...(*￣０￣)ノ
 2,从第一个元素开始循环查找是否存在目标元素与给出的元素相加为target  
 **代码：**  
 ```
-	class Solution {
-		public int[] twoSum(int[] nums, int target) {
-			Map<Integer, Integer> map = new HashMap<>();
-			for(int i = 0; i < nums.length; i++){
-				map.put(nums[i],i);
-			}
-			for(int i = 0; i < nums.length; i++){
-				int half = target - nums[i];
-					if(map.containsKey(half) && map.get(half) != i){
-						return new int[]{i,map.get(half)};
-					}
-			}
-			throw new IllegalArgumentException("No two sum solution");
+ class Solution {
+ 	public int[] twoSum(int[] nums, int target) {
+ 	Map<Integer, Integer> map = new HashMap<>();
+ 	for(int i = 0; i < nums.length; i++){
+		map.put(nums[i],i);
 		}
+		for(int i = 0; i < nums.length; i++){
+			int half = target - nums[i];
+			if(map.containsKey(half) && map.get(half) != i){
+				return new int[]{i,map.get(half)};				}
+		}
+		throw new IllegalArgumentException("No two sum solution");
 	}
-```
-## 两数相加  
-**条件：**  
-1,给出两个非空链表代表两个非负整数  
-2,两个链表的存放顺序和代表整数的位数相反，如第一个存放代表最低位  
-**目标：**  
-返回两个链表的和  
-**示例：**  
-```
- Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+ }
+``## 两数相加  
+**条**  
+1,给个非空链表代表两个非负整数  
+2个链表的存放顺序和代表整数的位数相反，如第一个存放代表最低位  **目标：**  
+返回两个链表的和  **示例：**  
+``
+ nput: (2 -> 4 -> 3) + (5 -> 6 -> 4)
  Output: 7 -> 0 -> 8
  Explanation: 342 + 465 = 807.
 ```
@@ -63,35 +59,35 @@ LeetCode算法笔记，持续更新...(*￣０￣)ノ
 4,链表相加完毕判断是否还需要进位，若carry大于0,则再增加一个子节点存放  
 **代码：**  
 ```
-	/**
-	 * Definition for singly-linked list.
-	 * public class ListNode {
-	 *     int val;
-	 *     ListNode next;
-	 *     ListNode(int x) { val = x; }
-	 * }
-	 */
-	class Solution {
-	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-			int carry = 0;
-			ListNode sumListNode = new ListNode(0);
-			ListNode temp = sumListNode;
-			while(l1 != null || l2 != null){
-				int x = (l1 == null? 0:l1.val);
-				int y = (l2 == null? 0:l2.val);
-				int sum = carry + x + y;
-				carry = sum / 10;
-				temp.next = new ListNode(sum % 10);
-				temp = temp.next;
-				if(l1 != null) l1 = l1.next;
-				if(l2 != null) l2 = l2.next;
-			}
-			if(carry > 0){
-				temp.next = new ListNode(carry);
-			}
-			return sumListNode.next;
-		}
-	}
+ /**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carry = 0;
+        ListNode sumListNode = new ListNode(0);
+        ListNode temp = sumListNode;
+        while(l1 != null || l2 != null){
+            int x = (l1 == null? 0:l1.val);
+            int y = (l2 == null? 0:l2.val);
+            int sum = carry + x + y;
+            carry = sum / 10;
+            temp.next = new ListNode(sum % 10);
+            temp = temp.next;
+            if(l1 != null) l1 = l1.next;
+            if(l2 != null) l2 = l2.next;
+        }
+        if(carry > 0){
+            temp.next = new ListNode(carry);
+        }
+        return sumListNode.next;
+    }
+ }
 ```
 ## 最大子字符串长度  
 **条件：**  
@@ -110,22 +106,22 @@ LeetCode算法笔记，持续更新...(*￣０￣)ノ
 思路二：用一个set存放最大子字符串，用一个变量max存储最大子字符串长度。将字符串中的字符按照顺序放入set，放入前查看是否有重复字符，如果有则剔除set的首字符，如果没有则继续放入，放入后max的值加1  
 **代码：**  
 ```
-	public class Solution {
-		public int lengthOfLongestSubstring(String s) {
-			int n = s.length();
-			int max = 0, i = 0, j=0;
-			Set<Character> set = new HashSet<>();
-			while(i < n && j < n){
-				if(set.contains(s.charAt(j))){
-					set.remove(s.charAt(i++));
-				}else{
-					set.add(s.charAt(j++));
-					max = max > j - i? max : j - i;
-				}
-			}
-			return max;
-		}
-	}
+ public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int max = 0, i = 0, j=0;
+        Set<Character> set = new HashSet<>();
+        while(i < n && j < n){
+            if(set.contains(s.charAt(j))){
+                set.remove(s.charAt(i++));
+            }else{
+                set.add(s.charAt(j++));
+                max = max > j - i? max : j - i;
+            }
+        }
+        return max;
+    }
+ }
 ```
 ## 最大回文字串  
 **条件：**  
@@ -146,33 +142,33 @@ LeetCode算法笔记，持续更新...(*￣０￣)ノ
 5,截取这个最大回文子串  
 **代码：**  
 ```
-	class Solution {
-		public String  longestPalindrome(String s) {
-		   if(s == null || s.length() < 1)
-					return "";
-				int start = 0, end = 0;
-				for(int i = 0; i < s.length(); i++){
-					//奇数回文
-					int len1 = expandFromCenter(s, i, i);
-					//偶数回文
-					int len2 = expandFromCenter(s, i, i + 1);
-					int len = Math.max(len1, len2);
-					if(len > end - start + 1){
-						start = i - (len - 1) / 2;
-						end = i + len / 2;
-					}
-				}
-				return s.substring(start,end + 1);
-			}
-		private int expandFromCenter(String s, int left, int right) {
-		   int L = left, R = right;
-			while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)){
-				L--;
-				R++;
-			}
-			return R - L - 1;
-		}
-	}
+ class Solution {
+    public String  longestPalindrome(String s) {
+        if(s == null || s.length() < 1)
+            return "";
+        int start = 0, end = 0;
+        for(int i = 0; i < s.length(); i++){
+            //奇数回文
+            int len1 = expandFromCenter(s, i, i);
+            //偶数回文
+            int len2 = expandFromCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+            if(len > end - start + 1){
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+        return s.substring(start,end + 1);
+    }
+    private int expandFromCenter(String s, int left, int right) {
+        int L = left, R = right;
+        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)){
+            L--;
+            R++;
+        }
+        return R - L - 1;
+    }
+ }	
 ```
 ## ”Z”子型转换  
 **条件：**  
@@ -199,33 +195,33 @@ LeetCode算法笔记，持续更新...(*￣０￣)ノ
 4,将list中的字符串全部按顺序拼接成一个字符串  
 **代码：**  
 ```
-	class Solution {
-		public String convert(String s, int numRows) {
-			if(numRows == 1)
-				return s;
-			List<StringBuffer> bufferList = new ArrayList<>();
-			int rows = s.length() < numRows? s.length(): numRows;
-			for(int i = 0; i < rows; i ++){
-				bufferList.add(new StringBuffer());
-			}
-			//是否往下
-			boolean downRow = false;
-			int curRow = 0;
-			for(Character c: s.toCharArray()){
-				bufferList.get(curRow).append(c);
-				if(curRow == 0 || curRow == numRows - 1){
-					downRow = !downRow;
-				}
-				curRow += downRow? 1: -1;
-			}
+ class Solution {
+    public String convert(String s, int numRows) {
+        if(numRows == 1)
+            return s;
+        List<StringBuffer> bufferList = new ArrayList<>();
+        int rows = s.length() < numRows? s.length(): numRows;
+        for(int i = 0; i < rows; i ++){
+            bufferList.add(new StringBuffer());
+        }
+        //是否往下
+        boolean downRow = false;
+        int curRow = 0;
+        for(Character c: s.toCharArray()){
+            bufferList.get(curRow).append(c);
+            if(curRow == 0 || curRow == numRows - 1){
+                downRow = !downRow;
+            }
+            curRow += downRow? 1: -1;
+        }
 
-			StringBuffer ret = new StringBuffer();
-			for (StringBuffer buffer: bufferList){
-				ret.append(buffer);
-			}
-			return ret.toString();
-		}
-	}
+        StringBuffer ret = new StringBuffer();
+        for (StringBuffer buffer: bufferList){
+            ret.append(buffer);
+        }
+        return ret.toString();
+    }
+ }
 ```
 
 
