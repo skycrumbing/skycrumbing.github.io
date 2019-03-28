@@ -1,10 +1,10 @@
-﻿---
+---
 layout: post
 title: 算法笔记
 tags:
 - algorithms
 categories: leetcode
-description: nginx部署个人博客
+description: 算法笔记
 ---
 LeetCode算法笔记，持续更新...(*￣０￣)ノ  
 
@@ -93,7 +93,7 @@ LeetCode算法笔记，持续更新...(*￣０￣)ノ
     }
  }
 ```
-## 最大子字符串长度  
+## 最大无重复字符串长度  
 **条件：**  
 1,给出一个字符串  
 **目标：**  
@@ -131,7 +131,7 @@ LeetCode算法笔记，持续更新...(*￣０￣)ノ
 **条件：**  
 1,给出一个字符串  
 **目标：**  
-2,返回它的最大回文子串
+2,返回它的最大回文子串  
 **示例：**  
 ```
  Input: "babad"
