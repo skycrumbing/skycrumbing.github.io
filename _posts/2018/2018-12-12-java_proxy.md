@@ -129,7 +129,7 @@ description: java代理的实现
 		System.out.println("目标对象" + target.getClass());
 		//代理对象
 		IuserDao proxy = (IuserDao) new proxFactory(target).getProxyInstance();
-		system.out.println("代理对象" + proxy.getClass());
+		System.out.println("代理对象" + proxy.getClass());
 		//执行代理对象的方法
 		proxy.save()
 	}
