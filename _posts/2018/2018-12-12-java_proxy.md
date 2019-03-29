@@ -103,7 +103,7 @@ description: java代理的实现
 			 // 获取当前执行的方法的方法名
 			 String methodName = method.getName();
 			 // 方法返回值
-			 Object result = ;
+			 Object result;
 			 if ("find".equals(methodName)) {
 			   // 直接调用目标对象方法
 			   result = method.invoke(target, args);
