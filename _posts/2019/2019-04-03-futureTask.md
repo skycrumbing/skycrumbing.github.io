@@ -56,6 +56,6 @@ public class FutureTaskDemo {
 }
 ```
 输出：  
-![结果](\assets\img\futureTask_1.jpg)  
+![结果](\assets\img\futureTask_1.png)  
 
 
