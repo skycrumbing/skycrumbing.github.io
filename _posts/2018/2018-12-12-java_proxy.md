@@ -103,7 +103,7 @@ description: java代理的实现
 			 // 获取当前执行的方法的方法名
 			 String methodName = method.getName();
 			 // 方法返回值
-			 Object result = ;
+			 Object result;
 			 if ("find".equals(methodName)) {
 			   // 直接调用目标对象方法
 			   result = method.invoke(target, args);
@@ -129,7 +129,7 @@ description: java代理的实现
 		System.out.println("目标对象" + target.getClass());
 		//代理对象
 		IuserDao proxy = (IuserDao) new proxFactory(target).getProxyInstance();
-		system.out.println("代理对象" + proxy.getClass());
+		System.out.println("代理对象" + proxy.getClass());
 		//执行代理对象的方法
 		proxy.save()
 	}
