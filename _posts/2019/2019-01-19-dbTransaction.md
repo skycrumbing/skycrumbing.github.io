@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: 数据库事务
 tags:
@@ -53,7 +53,7 @@ MVCC（Multi-Version Concurrency Control ，多版本并发控制）指的是在
 
 在MySQL中，READ COMMITTED和REPEATABLE READ隔离级别的的一个非常大的区别就是它们生成ReadView的时机不同  
 使用READ COMMITTED隔离级别的事务在每次查询开始时都会生成一个独立的ReadView。  
-使用REPEATABLE READ在事务第一次读取数据时生成一个ReadView  
+使用REPEATABLE READ在事务第一次读取数据时生成一个ReadView。  
 ## Spring事务管理接口  
 Spring事务管理接口包括三个部分  
 PlatformTransactionManager： （平台）事务管理器  
