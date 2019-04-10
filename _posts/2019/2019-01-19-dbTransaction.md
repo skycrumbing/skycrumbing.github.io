@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: 数据库事务
 tags:
@@ -29,10 +29,31 @@ description: 数据库事务
 **幻读**：TA事务第一次读取数据之后TB事务添加了数据并提交了，事务TA再次读取数据导致数据多了一些内容就像幻觉一样。  
 **为了解决事务并发带来的问题，数据库定义了几种不同的事务隔离级别**    
 **READ_UNCOMMITTED（未提交读）**: 最低的隔离级别，允许读取尚未提交的数据变更，可能会导致脏读、幻读或不可重复读  
-**EAD_COMMITTED（提交读）**: 允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生  
+**READ_COMMITTED（提交读）**: 允许读取并发事务已经提交的数据，可以阻止脏读，但是幻读或不可重复读仍有可能发生  
 **REPEATABLE_READ（可重复读）**: 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，可以阻止脏读和不可重复读，但幻读仍有可能发生。  
 **ERIALIZABLE（串行）**: 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，该级别可以防止脏读、不可重复读以及幻读。但是这将严重影响程序的性能。通常情况下也不会用到该级别。  
 Mysql 默认采用的 REPEATABLE_READ隔离级别 Oracle 默认采用的 READ_COMMITTED隔离级别.  
+## MVCC  
+MVCC（Multi-Version Concurrency Control ，多版本并发控制）指的是在使用提交读和可重复度的时候，mysql会在执行select操作的时候利用ReadView来访问版本链。这样子可以使不同事务的读-写、写-读操作并发执行，从而提升系统性能。  
+### 版本链  
+对于使用InnoDB存储引擎的表来说，它的聚簇索引记录中都包含两个必要的隐藏列  
+- trx_id：每次对某条聚簇索引记录进行改动时，都会把对应的事务id赋值给trx_id隐藏列。  
+- roll_pointer：每次对某条聚簇索引记录进行改动时，都会把旧的版本写入到undo日志中，然后这个隐藏列就相当于一个指针，它指向该记录修改前的信息（旧版本）。  
+
+对记录每次更新后，都会将旧记录放到一条undo日志中，就算是该记录的一个旧版本，随着更新次数的增多，所有的版本都会被roll_pointer属性连接成一个链表，我们把这个链表称之为**版本链**，版本链的头节点就是当前记录最新的值。另外，每个版本中还包含生成该版本时对应的事务id  
+### ReadView  
+对于使用READ UNCOMMITTED隔离级别的事务来说，直接读取记录的最新版本就好了，对于使用SERIALIZABLE隔离级别的事务来说，使用加锁的方式来访问记录。  
+对于使用READ COMMITTED和REPEATABLE READ隔离级别的事务来说，就需要用到版本链  
+**ReadView主要是用来判断版本链中的哪个版本是当前事务可见的**  
+这个ReadView中主要包含当前系统中还有哪些活跃的读写事务（未提交的），把它们的事务id放到一个列表中，我们把这个列表命名为为m_ids。  
+- 如果被访问版本的trx_id属性值小于m_ids列表中最小的事务id，表明生成该版本的事务在生成ReadView前已经提交，所以该版本可以被当前事务访问。  
+- 如果被访问版本的trx_id属性值大于m_ids列表中最大的事务id，表明生成该版本的事务在生成ReadView后才生成，所以该版本不可以被当前事务访问。  
+- 如果被访问版本的trx_id属性值在m_ids列表中最大的事务id和最小事务id之间，那就需要判断一下trx_id属性值是不是在m_ids列表中，如果在，说明创建ReadView时生成该版本的事务还是活跃的，该版本不可以被访问；如果不在，说明创建ReadView时生成该版本的事务已经被提交，该版本可以被访问。
+- 如果某个版本的数据对当前事务不可见的话，那就顺着版本链找到下一个版本的数据，继续按照上边的步骤判断可见性，依此类推，直到版本链中的最后一个版本，如果最后一个版本也不可见的话，那么就意味着该条记录对该事务不可见，查询结果就不包含该记录。  
+
+在MySQL中，READ COMMITTED和REPEATABLE READ隔离级别的的一个非常大的区别就是它们生成ReadView的时机不同  
+使用READ COMMITTED隔离级别的事务在每次查询开始时都会生成一个独立的ReadView。  
+使用REPEATABLE READ在事务第一次读取数据时生成一个ReadView  
 ## Spring事务管理接口  
 Spring事务管理接口包括三个部分  
 PlatformTransactionManager： （平台）事务管理器  
@@ -77,13 +98,13 @@ Spring给数据持久化话框架（hibernate，mybatis，JDBC）提供事务管
 ### TransactionStatus接口  
 TransactionStatus接口用来记录事务的状态 该接口定义了一组方法,用来获取或判断事务的相应状态信息。  
 ```
-	public interface TransactionStatus{
-		boolean isNewTransaction(); // 是否是新的事物
-		boolean hasSavepoint(); // 是否有恢复点
-		void setRollbackOnly();  // 设置为只回滚
-		boolean isRollbackOnly(); // 是否为只回滚
-		boolean isCompleted; // 是否已完成
-	} 
+public interface TransactionStatus{
+	boolean isNewTransaction(); // 是否是新的事物
+	boolean hasSavepoint(); // 是否有恢复点
+	void setRollbackOnly();  // 设置为只回滚
+	boolean isRollbackOnly(); // 是否为只回滚
+	boolean isCompleted; // 是否已完成
+} 
 ```
 
 
