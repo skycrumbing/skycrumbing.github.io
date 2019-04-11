@@ -1,6 +1,8 @@
-﻿# Where things are 文件都存放在哪
+# Where things are 文件都存放在哪
 source:       .
 destination:  ./_site
+
+encoding: utf-8
 
 #### Exclude
 exclude: [".rvmrc", ".rbenv-version", "README.md", "README_en.md", "Rakefile", "changelog.md"]
