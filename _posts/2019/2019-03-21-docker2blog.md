@@ -35,7 +35,7 @@ sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
 安装git,创建git项目文件夹,将github的项目克隆到文件夹下  
 ### 生成静态文件  
 在项目路径下运行bundle exec jekyll server  
-命令执行成功后会有提示，同时在项目路径下生成\_site文件夹，里面是编译成功的静态文件，退出运行状态  
+命令执行成功后会有提示，同时在项目路径下生成\_site文件夹，里面是编译成功的静态文件，ctrl+c退出运行状态  
 在这个编译环节出现了问题：  
 这个ubuntu系统当前并没有使用utf-8的字符集  
 使用locale命令查看系统正在使用的编码方式  
