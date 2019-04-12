@@ -116,7 +116,7 @@ docker run -dit --privileged -p4000:4000 -p80:80 --name myblog skycrumbing/myblo
 run的各项参数：  
 -dit 是 -d -i -t 的缩写。-d表示detach，即在后台运行。-i表示提供交互接口这样才可以通过docker和跑起来的操作系统交互。-t表示提供一个 tty (伪终端)，与-i配合就可以通过ssh 工具连接到这个容器里面去了  
 -p4000:4000。第一个4000，表示在服务器上开放4000端口。 第二个4000表示在容器里开放4000端口。 这样当访问服务器的21端口的时候，就会间接地访问到容器里了  
--p80:80。也是同样的道理。
+-p80:80。也是同样的道理。  
 如果运行失败可能是容器已经存在没有删除，所以需要先删除  
 ```
 docker rm myblog
@@ -125,6 +125,10 @@ docker rm myblog
 ```
 docker exec -it myblog /bin/bash
 ```
+### 准备工作  
+使用source /etc/profile命令采用utf-8字符集  
+进入git项目路径，pull最新的代码  
+在项目路径下运行bundle exec jekyll server  
 ### 启动nginx  
 ```
 /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
