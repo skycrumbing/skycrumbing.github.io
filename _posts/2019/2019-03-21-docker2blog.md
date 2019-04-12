@@ -84,6 +84,7 @@ server {
 	location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|js|pdf|txt){
 				 root /myblog/data/skycrumbing.github.io/_site;
 	}
+}
 ```
 检查nginx配置是否有问题  
 ```
