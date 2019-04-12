@@ -21,8 +21,8 @@ sudo docker run -i -t ubuntu /bin/bash
 ```
 如果存在就进入容器，不存在就会从docker仓库下载。  
 ### 安装ruby和 Bundler和 Jekyll  
-在这里遇到了两个问题:  
-1. 在使用bundler install命令安装Jekyll时报错  
+在这里遇到了问题:  
+在使用bundler install命令安装Jekyll时报错  
 ```
 An error occurred while installing nokogiri (x.x.x), and Bundler cannot continue
 ```
@@ -31,8 +31,13 @@ An error occurred while installing nokogiri (x.x.x), and Bundler cannot continue
 ```
 sudo apt-get install build-essential patch ruby-dev zlib1g-dev liblzma-dev
 ```
-
-2. 这个ubuntu系统当前并没有使用utf-8的字符集  
+### 安装git
+安装git,创建git项目文件夹,将github的项目克隆到文件夹下  
+### 生成静态文件  
+在项目路径下运行bundle exec jekyll server  
+命令执行成功后会有提示，同时在项目路径下生成\_site文件夹，里面是编译成功的静态文件，退出运行状态  
+在这个编译环节出现了问题：  
+这个ubuntu系统当前并没有使用utf-8的字符集  
 使用locale命令查看系统正在使用的编码方式  
 ```
 LANG=
@@ -59,12 +64,8 @@ POSIX
 ```
 解决方式：  
 安装vim，使用vim编辑 /etc/profile。将“export LANG="C.UTF-8”命令添加在profile最后  
-
-### 安装git
-安装git,创建git项目文件夹,将github的项目克隆到文件夹下  
-### 生成静态文件  
-在项目路径下运行bundle exec jekyll server  
-命令执行成功后会有提示，同时在项目路径下生成\_site文件夹，里面是编译成功的静态文件，退出运行状态  
+然后使用source /etc/profile刷新  
+注意：一旦从容器中退出，然后再进去，编码集还原，需要再次使用source /etc/profile再次刷新才可   
 ### 安装nginx以及相关依赖的包  
 安装成功后会在/usr/local下生成nginx文件夹  
 使用vim编辑/usr/local/nginx/conf/nginx.conf。更改nginx.conf的server配置  
@@ -134,7 +135,8 @@ docker exec -it myblog /bin/bash
 如果是阿里云的服务器需要开启对外的端口。  
 由于我需要使用的是4000端口和容器进行交互，所以需要开启4000端口。  
 ### 访问测试  
-浏览器访问网站:http://47.106.248.123:4000
+浏览器访问网站:http://47.106.248.123:4000  
+### 上传镜像到仓库    
 
 
 
