@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: 算法笔记
 tags:
@@ -553,7 +553,272 @@ C在D和M左边代表400和900。
     }
  }
 ```
+## 三数和
+**条件：**  
+1,给定一个包含n个整型的数组  
+**目标：**  
+1.找到相加等于0的三个元素，放入到一个三元数组  
+2.把所有符合条件的三元数组放入一个数组  
+3.三元数组不可重复   
+**示例：**  
+```
+Given array nums = [-1, 0, 1, 2, -1, -4],
 
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+```
+**思路：**  
+1,将数组排序  
+2,循环每个元素  
+3,从剩下的元素中的两头找两数和等于循环元素的负数  
+4,排除相等的元素避免重复的结果  
+**代码：**  
+```
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> res = new LinkedList<>();
+        Arrays.sort(nums);
+        int len = nums.length;
+        for(int i = 0; i < len - 2; i++) {
+            //排除相等的元素避免重复的结果
+            if (i == 0 || (i > 0 && nums[i] != nums[i - 1])) {
+                int low = i + 1, hig = nums.length - 1, sum = -nums[i];
+                while (low < hig) {
+                    if (nums[low] + nums[hig] == sum) {
+                        res.add(Arrays.asList(nums[i], nums[low], nums[hig]));
+                        //排除相等的元素避免重复的结果
+                        while (low < hig && nums[low] == nums[low+1]) low++;
+                        while (hig < hig && nums[hig] == nums[hig-1]) hig--;
+                        low++;
+                        hig--;
+                    } else if (nums[low] + nums[hig] < sum) low++;
+                    else hig--;
+                }
+            }
+        }
+        return res;
+    }
+}
+```
+## 数组去重
+**条件：**  
+1,给定一个整型数组  
+**目标：**  
+1,把重复的元素去掉输出  
+**示例：**  
+```
+Input: [1，3，1，-1，0，-1，0]
+Output: [1，3，-1，0]
+```
+**思路：**  
+1,一个dest存储返回的目标数组  
+2,一个嵌套循环，外循环遍历每一个数组元素，内循环检测该元素是否有重复，重复则剔除，没有重复则将其加入dest  
+**代码：**  
+```
+class Solution {
+    public int[] deDuplication(int[] nums) {
+        int[] dest = new int[nums.length];
+        int index = 0;
+        for(int i = 0; i < nums.length; i++){
+            for(int j = i + 1; j < nums.length; j++){
+                if(nums[i] == nums[j])
+                    i++;
+            }
+            dest[index] = nums[i];
+            index++;
+
+        }
+
+        return Arrays.copyOf(dest,index);
+    }
+}
+```
+## 电话号码的字母组合
+**条件：**  
+1,给定一个包含2-9的字符串  
+2,每个数字映射多个字母（如下图）  
+![映射图](\assets\img\algorithms_2.png)   
+**目标：**  
+返回这个数字组合对应的所有字母组合  
+**示例：**  
+```
+Input: "23"
+Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+```
+**思路：**  
+使用回溯法。通过查找所有的潜在的可能性得到全部的答案。如果这个潜在的可能性是错的（或者不是最终的答案）回溯法放弃这个可能性并且更改先前步骤的一些参数，继续尝试。
+**代码：**  
+```
+class Solution {
+    //匿名内部类初始化法
+    Map<String, String> phone = new HashMap<String, String>() {{
+    put("2", "abc");
+    put("3", "def");
+    put("4", "ghi");
+    put("5", "jkl");
+    put("6", "mno");
+    put("7", "pqrs");
+    put("8", "tuv");
+    put("9", "wxyz");
+  }};
+    
+    List<String> output = new ArrayList<String>();
+        
+    public List<String> letterCombinations(String digits) {
+        if(digits.length() != 0)
+        backtrack("", digits);
+        return output;
+    }
+    
+    public void backtrack(String combination, String next_digits){
+        if(next_digits.length() == 0){
+            output.add(combination);
+        }else{
+            String digit = next_digits.substring(0, 1);
+            String letters = phone.get(digit);
+            for(int i = 0; i < letters.length(); i++){
+                String letter = letters.substring(i, i + 1);
+                backtrack(combination + letter, next_digits.substring(1));
+            }
+        }
+    }
+}
+```
+## 四数和
+**条件：**  
+1,给出一个包含n个的整型数组  
+2,给出一个目标数组  
+**目标：**  
+找到四个元素相加等于目标数组的所有可能  
+**示例：**
+```
+Given array nums = [1, 0, -1, 0, -2, 2], and target = 0.
+
+A solution set is:
+[
+  [-1,  0, 0, 1],
+  [-2, -1, 1, 2],
+  [-2,  0, 0, 2]
+]
+```
+**思路：**  
+将四数和转换为两数和  
+**代码：**  
+```
+class Solution {
+    private int len;
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        len = nums.length;
+        Arrays.sort(nums);
+        List<List<Integer>> res = kusm(nums, target, 4, 0);
+        return res;
+    }
+
+    private ArrayList<List<Integer>> kusm(int[] nums, int target, int k, int index) {
+        ArrayList<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(index >= len){
+            return res;
+        }
+        //两数和
+        if (k == 2) {
+            int l = index;
+            int r = len - 1;
+            while (l < r) {
+                //如果两数和等于目标数
+                if (target == nums[r] + nums[l]) {
+                    List<Integer> list = new ArrayList<>();
+                    list.add(nums[l]);
+                    list.add(nums[r]);
+                    res.add(list);
+                    //去重
+                    while (l < r && nums[l] == nums[l + 1])
+                        l++;
+                    while (l < r && nums[r] == nums[r - 1])
+                        r--;
+                    l++;
+                    r--;
+                }
+                //如果两数和大于目标数
+                else if (target < nums[r] + nums[l]) {
+                    r--;
+                } else {
+                    l++;
+                }
+            }
+        }
+        //多数和
+        if (k > 2) {
+            for (int i = index; i < len - k + 1; i++) {
+                List<List<Integer>> tmp = kusm(nums, target - nums[i], k - 1, i + 1);
+
+                if (tmp != null) {
+                    //将当前的元素添加进每一个list中
+                    for (List<Integer> t : tmp) {
+                        t.add(0, nums[i]);
+                    }
+                    res.addAll(tmp);
+                }
+                //去重
+                while (i < len - 1 && nums[i] == nums[i + 1])
+                    i++;
+            }
+        }
+        return res;
+    }
+}
+```
+## 移除倒数第n的节点
+**条件：**  
+1,给一个单向链表  
+2,给定一个整数n，整数的长度小于链表的长度  
+**目标：**  
+1,移除倒数第n个节点，返回这个链表  
+**示例：**  
+```
+Given linked list: 1->2->3->4->5, and n = 2.
+
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+```
+**思路：**  
+1,遍历链表找出链表的长度len  
+2,将第len-n的节点和len-n+2的节点相连  
+**代码：**  
+```
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        int length = 0;
+        ListNode first = head;
+        while(first != null){
+            length++;
+            first = first.next;
+            
+        }
+        
+        length -= n;
+        first = dummy;
+        while(length != 0){
+            first = first.next;
+            length--;
+        }
+        first.next = first.next.next;
+        return dummy.next;
+        
+    }
+}
+```
 
 
 
