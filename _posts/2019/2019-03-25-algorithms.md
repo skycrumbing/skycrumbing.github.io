@@ -654,7 +654,7 @@ Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
 ```
 class Solution {
     //匿名内部类初始化法
-    Map<String, String> phone = new HashMap<String, String>() {{
+    Map<String, String> phone = new HashMap<String, String>() { {
         put("2", "abc");
         put("3", "def");
         put("4", "ghi");
@@ -663,7 +663,7 @@ class Solution {
         put("7", "pqrs");
         put("8", "tuv");
         put("9", "wxyz");
-  }};
+    } };
     
     List<String> output = new ArrayList<String>();
         
