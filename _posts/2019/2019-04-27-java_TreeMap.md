@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: JAVA TreeMap（红黑树）源码分析
 tags:
@@ -72,7 +72,7 @@ private void rotateRight(Entry<K,V> p) {
 }
 ```
 ### 结构调整  
-fixAfterInsertion(Entry<K,V> x)是在插入一个节点时进行的树结构调整（调整颜色和左右旋）。参数x为插入的新节点  
+fixAfterInsertion(Entry<K,V> x)是在插入一个节点之后进行的树结构调整（调整颜色和左右旋）。参数x为插入的新节点  
 ```
 /**调整二叉树
  * 原则：
