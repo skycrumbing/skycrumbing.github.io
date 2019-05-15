@@ -3,7 +3,7 @@ layout: post
 title: 第三方授权
 tags:
 - authorize
-categories: security
+categories: thinking
 description: 第三方授权
 ---
 ## 第三方授权
