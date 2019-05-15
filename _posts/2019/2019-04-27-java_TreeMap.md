@@ -38,7 +38,7 @@ private void rotateLeft(Entry<K,V> p) {
         //如果p为根节点，根节点直接被p的右节点替代
         if (p.parent == null)
             root = r;
-        //下面两个选择表示无论p是他父节点的左节还是右节点，都将他置为p节点的右节点
+        //下面两个选择表示无论p是他父节点的左节还是右节点，都将原来的p置为p节点的右节点
         else if (p.parent.left == p)
             p.parent.left = r;
         else

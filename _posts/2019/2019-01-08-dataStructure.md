@@ -2,8 +2,8 @@
 layout: post
 title: 数据结构
 tags:
-- foundation
-categories: dataStructure
+- dataStructure
+categories: java
 description: java数据结构
 ---
 ## java数据结构
