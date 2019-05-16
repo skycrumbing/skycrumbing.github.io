@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: 算法笔记
 tags:
@@ -819,10 +819,431 @@ class Solution {
     }
 }
 ```
+## 有效的多括号  
+**条件：**  
+给一个仅仅包含‘(’，‘)’，‘{’，‘}’，‘[’和‘]’,的字符串  
+**目标：**  
+判断这个字符串的括号组成是否合理  
+**示例：**  
+```
+Input: "()[]{}"  
+Output: true
+Input: "(]"
+Output: false
+```
+**思路：**  
+1,遍历这个字符串，取出每一个字符  
+2,用一个栈存放取符合条件的字符（如果取出来的是开阔号，就存进去）  
+3,如果是闭括号，判断栈顶是不是对应的开阔号，是就弹栈，不是就直接返回错误  
+4,遍历结束如果这个栈大小不为0，返回错误，否则返回正确  
+**代码：**  
+```
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        //map存放映射关系
+        Map<Character, Character> map = new HashMap<>();
+        map.put(')', '(');
+        map.put('}', '{');
+        map.put(']', '[');
 
+        char c;
+        for(int i = 0; i < s.length(); i++){
+            c = s.charAt(i);
+            if(map.containsKey(c)){
+                char top = stack.isEmpty()? '#': stack.pop();
+                if(top != map.get(c))
+                    return false;
+            }
+            else{
+                stack.push(c);
+            }
+        }
 
+        if(stack.isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
 
+    }
+}
+```
+## 合并两个有序链表  
+**条件：**  
+给出两个有序单向链表  
+**目标：**  
+合并这两个单向链表成一个新的单向链表  
+**示例：**  
+```
+Input: 1->2->4, 1->3->4
+Output: 1->1->2->3->4->4
+```
+**思路：**  
+递归处理，如果链表一的头节点大于链表二的头节点，返回链表二，反之返回链表一。并且链表的下一节点继续如上处理，直到两个链表有一个链表为空（或者两个都为空）  
+**代码：**  
+```
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if(l1 == null){
+            return l2;
+        }
+        if(l2 == null){
+            return l1;
+        }
+        if(l1.val > l2.val){
+            l2.next = mergeTwoLists(l1, l2.next);
+            return l2;
+        }else{
+            l1.next = mergeTwoLists(l1.next, l2);
+            return l1;
+        }
+    }
+}
+```
+## 生成有效多括号  
+**条件：**  
+给定n对括号  
+**目标：**  
+返回有效的多括号组成的集合  
+**示例：**  
+```
+Input: 3
+Output:
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+```
+**思路一：**  
+递归穷举所有组合  
+验证每个组合是否正确  
+**代码：**  
+```
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> combinations = new ArrayList();
+        generateAll(new char[2 * n], 0, combinations);
+        return combinations;
+    }
 
+    public void generateAll(char[] current, int pos, List<String> result) {
+        if (pos == current.length) {
+            if (valid(current))
+                result.add(new String(current));
+        } else {
+            current[pos] = '(';
+            generateAll(current, pos+1, result);
+            current[pos] = ')';
+            generateAll(current, pos+1, result);
+        }
+    }
 
+    public boolean valid(char[] current) {
+        int balance = 0;
+        for (char c: current) {
+            if (c == '(') balance++;
+            else balance--;
+            if (balance < 0) return false;
+        }
+        return (balance == 0);
+    }
+}
+```
+**思路二：**   
+回溯法，只递归生成正确的组合  
+如果开阔号的数量小于总数的一半，可以添加开阔号  
+如果必括号的数量小于开阔号的数量，可以添加必括号  
+**代码：**  
+```
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        ArrayList<String> target = new ArrayList<>();
+        backTrack(target, 0, 0, "", n);
+        return target;
+    }
+    private void backTrack(ArrayList<String> target,int open, int close, String s, int max){
+        if(s.length() == max * 2){
+            target.add(s);
+            return;
+        }
+        
+        if(open < max){
+            backTrack(target, open+1, close, s + "(", max);
+        }
+        if(close < open){
+            backTrack(target, open, close+1, s + ")", max);
+        }
+    }
+}
+```
+## 链表按k反转  
+**条件：**  
+1,给出一个整型链表  
+2,给出一个数字K  
+3,k的大小小于链表的长度  
+**目标：**  
+将链表从头开始反转，一次反转k个节点  
+**示例：**  
+```
+Given this linked list: 1->2->3->4->5
+For k = 2, you should return: 2->1->4->3->5
+For k = 3, you should return: 3->2->1->4->5
+```
+**思路：**  
+每次取前k个节点进行反转。如果节点不够，则不进行反转。  
+**代码：**  
+```
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        int count = 0; //计数
+        ListNode curr = head; //当前节点
+        while(count != k && curr != null){
+            curr = curr.next;
+            count++;
+        }
+        //如果节点个数等于k
+        if(count == k){
+            curr = reverseKGroup(curr, k);
+            while(count-- > 0){
+                ListNode temp = head.next;
+                head.next = curr; //将头节点变成最后一个节点（和下一组头节点相连）
+                curr = head; //将改造后的head赋给curr继续下一次循环
+                head = temp;//下一次循环的head    
+            }  
+            head = curr;
+        }
+        return head;
+    }
+}
+```
+## 有序数组去重  
+**条件：**  
+给定一个有序的整型数组  
+**目标：**  
+1,只能改变原有的数组，既不能分配额外的存储空间  
+2,返回数组的不重复元素的个数  
+3,原数组长度保持不变  
+**示例：**  
+```
+Given nums = [1,1,2],
 
+Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively.
 
+It doesn't matter what you leave beyond the returned length.
+```
+**思路：**  
+1,将数组分为两个部分,不重复部分和重复部分。  
+2,用两个指针，第一个指针指向不重复部分的末尾，第二个指针指向最新的不重复元素之后的元素。
+3,如果第二个指针指向的元素和第一个指针指向的元素重复则指向下一个。直到指向的元素和第一个指针指向的元素不重复，则将第二个指针指向的元素赋值给第一个指针指向元素的下一个元素。
+**代码：**  
+```
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        int i = 0;
+        for(int j = 1; j < nums.length; j++){
+//找到右边的第一个不重复元素，将不重复的元素添加到第一个重复元素的右边
+            if(nums[i] != nums[j]){
+                i++;
+                nums[i] = nums[j];
+            }
+        }
+        return i+1; 
+    }
+}
+```
+## 串联所有字符串的子串  
+**条件：**  
+1,给出一个字符串s  
+2,给出一个字符串数组  
+3,字符串数组的每个元素长度相等  
+**目标：**  
+1,返回能串联所有字符串数组的子字符串的起始下标  
+2,串联的顺序是任意的  
+**示例：**  
+```
+Input:
+  s = "barfoothefoobarman",
+  words = ["foo","bar"]
+Output: [0,9]
+Explanation: Substrings starting at index 0 and 9 are "barfoor" and "foobar" respectively.
+The output order does not matter, returning [9,0] is fine too.
+```
+**思路：**  
+1,用一个map存储字符串数组，键是每一个word，值是每个word出现的次数  
+2,遍历s的每个字符，从起始开始截取字符串，字符串的长度为字符串数组中所有字符的长度。  
+3,用另一个map按照word的长度存储截取的字符串，作为key,值为每个key出现的次数  
+4,对比第一个map是否有相等的key并且key出现的次数是否不大于第一个map  
+5,如果两个map的大小相等，则是我们要寻找的子串。  
+**代码：**  
+```
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+         //存储结果
+        List<Integer> list = new ArrayList<>();
+        
+         //存储每个word和word出现的次数
+        Map<String, Integer> wordsMap = new HashMap<>();
+        int arrayLen = words.length;
+        for(int i = 0; i < arrayLen; i++){
+            wordsMap.put(words[i], wordsMap.getOrDefault(words[i],0) + 1);
+        }
+       
+        if(words.length == 0){
+            return list;
+        }
+        int wordLen = words[0].length();
+        for(int i = 0; i < s.length() - arrayLen * wordLen + 1; i++){
+            //存储s中每个word和word存在的次数，然后和wordsMap比较
+            Map<String, Integer> sMap = new HashMap<>();
+            int j = 0;
+            while(j != arrayLen){
+                String getSubstring = s.substring(i + j * wordLen, i + j * wordLen + wordLen);
+
+                sMap.put(getSubstring, sMap.getOrDefault(getSubstring, 0) + 1);
+                if(wordsMap.containsKey(getSubstring) && wordsMap.get(getSubstring) >= sMap.get(getSubstring)){
+                    j++;
+                }else{
+                    break;
+                }
+            }
+            if(j == arrayLen){
+                list.add(i);
+            }
+        }
+        
+        return list;
+    }
+}
+```
+## 下一个排列
+**条件：**  
+1,给出一个整型数组  
+2,给出的数组能组成一个数字  
+**目标：**  
+1,将数组重新组合,使得这个重新组合的数组代表的数字大小是所有组合中大于原数组的最小值。  
+2,如果这个给定的数组已经代表最大值，则返回它的最小值。  
+**示例：**  
+```
+1,2,3 → 1,3,2
+3,2,1 → 1,2,3
+1,1,5 → 1,5,1
+```
+**思路：**  
+1,从低位到高位找到相邻两个排序为升序的元素a[i]和a[i+1]  
+2,如果找不到证明得顶数组为最大值，将全部元素重小到大排列  
+2,将a[i]和右边大于a[i]最小的元素替换  
+3,将a[i]右边的元素从小到大排列  
+**代码：**  
+```
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int len = nums.length;
+        int i = len - 2;
+        while(i >= 0 && nums[i] >= nums[i + 1]){
+            i--;
+        }
+        //如果存在相邻元素为升序排列
+        if(i >= 0){
+            int j = len -1;
+            //找到第一个大于a[i]的元素并且替换
+            while(j >=0 && nums[i] >= nums[j]){
+                j--;
+            }
+            swap(nums, i, j);
+        }
+        //升序排列a[i]右侧的元素，或者升序排列全部的元素
+        reverse(nums, i+1);
+    }
+    
+    private void reverse(int[] nums, int start) {
+        int i = start, j = nums.length - 1;
+        while(i < j){
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+    //替换
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
+```
+## 最长有效括号
+**条件：**  
+给定一个只包含‘（’和’）’的字符串  
+**目标：**  
+返回最长的有效括号格式的字符子串长度  
+**示例：**  
+```
+Input: ")()())"
+Output: 4
+Explanation: The longest valid parentheses substring is "()()"
+```
+**思路：**  
+动态规划方案：  
+1,初始化一个数组dp，其中dp[i]存储以字符串第i个元素结尾的最长的有效字符子串的长度。  
+2,如果字符串第i个元素是’(’，则显然dp[i]=0,因为一个有效的括号字符串是以’)’结尾。  
+3,如果字符串第i-1个元素是‘(’，第i个元素是‘)’，则dp[i]=dp[i-2]+2  
+4,如果字符串第i-1个元素是‘)’，第i个元素是‘)’。  
+①获取字符串以i-1元素结尾的有效字符子串的前一个字符，判断是否是’(’，如果是，则证明该结构为“(以i-1元素结尾的有效字符子串)“，是一个有效字符串，此时dp[i]=dp[i-1]+2
+②获取字符串以i-1元素结尾的有效字符子串的前第二个字符的有效字符子串的长度，再和原来的dp[i]相加，此时dp[i] =dp[i-1]+2+dp[dp[i-1] - 2]  
+**代码：**  
+```
+class Solution {
+    public int longestValidParentheses(String s) {
+        if("".equals(s)){
+            return 0;
+        }
+        int max = 0;
+        int[] dp = new int[s.length()];
+        dp[0] = 0;
+        for(int i = 1; i < dp.length; i++){
+            if(s.charAt(i) == '('){
+                dp[i] = 0;
+            }else if(s.charAt(i) == ')' && s.charAt(i - 1) == '('){
+                //是否是第二个元素
+                if(i -2 < 0){
+                    dp[i] = 2;
+                }else{
+                    dp[i] = dp[i - 2] + 2;
+                }
+            }else{
+                if(i - dp[i - 1] > 0 && s.charAt(i - dp[i - 1] - 1) == '('){
+                    if((i - dp[i -1]) >=2){
+                        dp[i] = dp[i - 1] + 2 + dp[i - dp[i - 1] -2];   
+                    }else{
+                        dp[i] = dp[i - 1] + 2;
+                    }
+                }else{
+                    dp[i] = 0;
+                }
+            }
+            max = max > dp[i]? max:dp[i];
+        }
+        return max;
+    }
+}
+```
