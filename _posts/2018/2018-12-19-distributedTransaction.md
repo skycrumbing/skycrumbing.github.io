@@ -3,7 +3,6 @@ layout: post
 title: 分布式事务
 tags:
 - transaction
-- MQ
 - micro-services
 categories: database
 description: 分布式事务
