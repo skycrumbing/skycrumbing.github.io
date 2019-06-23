@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: 算法笔记
 tags:
