@@ -33,7 +33,7 @@ public interface Servlet {
 ```  
 其中service方法是我们需要实现的具体业务代码。而ServletRequest和ServletResponse则是对http协议的封装，包括请求和响应信息。  
 servlet在初始化时会调用init方法，在销毁的时候会调用destory方法。  
-在配置web.xml时可以给servlet设置一些参数，ServletConfig类是在，并且通过getServletConfig拿到这些参数。  
+在配置web.xml时可以给servlet设置一些参数，这些参数作为servlet的初始化参数被封装在ServletConfig类，并且通过getServletConfig拿到这些参数。  
 genericServlet是Servlet的抽象实现，大部分servlet是在http环境中处理的。所以servlet规范还提供了httpServlet来继承genericServlet，如此我们只需要将业务代码写入doGet和doPost方法  
 ### servlet容器  
 根据servlet规范，web应用需要有一定的目录结构，结构如下：  
