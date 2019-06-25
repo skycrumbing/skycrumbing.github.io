@@ -53,6 +53,7 @@ listener是监听器。servlet容器在运行过程中会发生各种事件，�
 tomcat要解决的两个核心问题：  
 - http服务器：处理socket连接，网络协议和Request 和 Response 对象的相互转化。  
 - servlet容器：管理servlet,处理request请求。  
+
 tomcat设计了两个核心组件解决这个问题：连接器（connector）负责对完交流,容器（container）负责管理内部。  
 **tomcat支持的I/O模型：**  
 IO：非阻塞 I/O，采用 Java NIO类库实现。  
@@ -93,8 +94,7 @@ HTTP/2：HTTP 2.0 大幅度的提升了 Web 性能。
 **EndPoint**：是用来实现TCP/IP协议的。是一个接口，对应的抽象实现类是AbstractEndpoint，而在它的具体子类如NioEndPoint和Nio2EndPoint，有两个重要的子组件：Acceptor和SocketProcessor。  
 其中Acceptor用来监听Socket的连接请求，SocketProcessor用来处理这些请求。SocketProcessor被提交到线程池里进行处理，这个线程池叫执行器（Executor）。  
 **Processor**：用来解析应用层协议，并将其封装到Tomcat Request/Response。  
-**Adapter**：tomcat定义的Tomcat Request/Response并不是标准的Servlet Request/Response。为了解决这个问题引入了CoyoteAdapter，这是适配器模式的经典运用
-。连接器调用CoyoteAdapter的service方法，传入的是Tomcat Request，然后将其转化为Servlet Request再调用容器的service方法。  
+**Adapter**：tomcat定义的Tomcat Request/Response并不是标准的Servlet Request/Response。为了解决这个问题引入了CoyoteAdapter，这是适配器模式的经典运用。连接器调用CoyoteAdapter的service方法，传入的是Tomcat Request，然后将其转化为Servlet Request再调用容器的service方法。  
 ![连接器组件图](\assets\img\tomcat&jetty_4.jpg)  
 ### 容器（container）  
 tomcat设计了四种容器Engine、Host、Context 和 Wrapper。他们之间是父子关系，具有层次结构  
