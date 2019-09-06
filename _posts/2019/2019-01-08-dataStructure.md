@@ -52,7 +52,7 @@ ArrayList 优势在于访问速度（即查找get和更新set）以及存储空�
 缺点：  
 1，无法确保每个子map(LinearMap)只有一个Entry或者Entry个数是均匀的，因为不同的Key对象的hashcode可能相同。  
 2，无法保证hashMap的存储顺序是特定的。  
-## 二叉搜索树（BTS）  
+## 二叉搜索树（BST）  
 1，如果 node 有一个左子树，左子树中的所有键都必须小于 node 的键。  
 2，如果 node 有一个右子树，右子树中的所有键都必须大于 node 的键。  
 二叉搜索树的查询逻辑：  
