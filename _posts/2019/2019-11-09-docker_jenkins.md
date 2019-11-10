@@ -54,7 +54,7 @@ docker run -d -p 18080:8080 -p 50000:50000 --restart=always --privileged=true -v
 ![全局配置](\assets\img\docker_jenkins_3.png)  
 最后保存配置。  
 - 配置完成后就可以开始新建任务了，选择构建一个自由风格的软件项目  
-源码管理选择git配置项目的github信息  
+源码管理选择git，配置项目的github信息  
 构建步骤中添加调用顶层 Maven 目标,版本我们选择之前配置的。目标就是maven需要执行的命令，这里我们填clean install  
 ![maven配置](\assets\img\docker_jenkins_4.png)  
 最后保存配置
