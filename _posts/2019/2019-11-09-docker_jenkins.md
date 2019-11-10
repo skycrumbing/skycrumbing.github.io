@@ -2,7 +2,8 @@
 layout: post
 title: docker+jenkins+mysql+java
 tags:
-- io
+- docker
+- jenkins
 categories: server
 description: docker+jenkins+mysql+java
 ---
