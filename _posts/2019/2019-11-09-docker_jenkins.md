@@ -1,4 +1,4 @@
-﻿---
+---
 layout: post
 title: docker+jenkins+mysql+java
 tags:
