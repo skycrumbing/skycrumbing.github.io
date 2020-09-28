@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 关于redis锁的使用问题  
+title: 关于redis锁失效的问题  
 tags:
 - redis  
 - lock
@@ -38,4 +38,4 @@ redis锁详情：[分布式锁](http://blog.tantao.site/database/2018/11/15/disL
 * 使用redis锁失效的原因： 和synchronized类似，释放redis锁的逻辑是在业务逻辑处理完成后，但是没有在提交事务后导致了脏读。  
 
 ## 解决办法  
-最直接的方法就是把当日预发数量存放在redis中，这样不仅能解决并非产生的脏数据问题，还能提高响应速度  
+最直接的方法就是把当日预发数量存放在redis中，这样不仅能解决并发产生的脏数据问题，还能提高响应速度  
