@@ -3,7 +3,7 @@ layout: post
 title: 关于hibernate的使用问题
 tags:
 - hibernate
-categories: framework
+categories: work
 description: 一级缓存的使用问题
 ---
 ## 场景
