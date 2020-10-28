@@ -19,7 +19,7 @@ description: 在项目中使用redis锁失效
 ## 代码设计  
 为了避免领取量超过预发量，使用了redis来对整个操作进行加锁  
 加锁原理见之前的笔记：  
-redis锁详情：[分布式锁](http://blog.tantao.site/database/2018/11/15/disLock/ "分布式锁")  
+redis锁详情：[分布式锁](https://skycrumbing.github.io/database/2018/11/15/disLock/ "分布式锁")  
 
 ## 实际效果
 当并发量大时依旧会出现领卷数量超过当日预发数量   
