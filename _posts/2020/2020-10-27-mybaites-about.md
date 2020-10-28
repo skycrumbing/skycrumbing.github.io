@@ -61,7 +61,7 @@ SqlSession session=factory.openSession();
         } else if (ExecutorType.REUSE == executorType) {
             executor = new ReuseExecutor(this, transaction);
         } else {
-        	//先获取SimpleExecutor执行器
+            //先获取SimpleExecutor执行器
             executor = new SimpleExecutor(this, transaction);
         }
         //在Configuration的构造方法中cacheEnabled默认为true，此时SimpleExecutor作为CachingExecutor的一个属性被装饰（装饰器模式）
