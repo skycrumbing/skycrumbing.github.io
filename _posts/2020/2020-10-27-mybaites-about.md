@@ -14,7 +14,7 @@ description: 关于mybaties的一些知识点整理
 <!-- more -->
 
 ## 代码执行过程  
-## 获取SqlSession     
+### 获取SqlSession     
 ```
 //读取配置
 reader = Resources.getResourceAsReader(resource);
