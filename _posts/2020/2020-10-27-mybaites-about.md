@@ -337,7 +337,7 @@ public @interface MapperScan {
     String sqlSessionTemplateRef() default "";
 
     String sqlSessionFactoryRef() default "";
-    //重点 MapperFactoryBean
+    //重点关注一下 MapperFactoryBean
     Class<? extends MapperFactoryBean> factoryBean() default MapperFactoryBean.class;
 
     String[] properties() default {};
@@ -407,7 +407,7 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
         if (!BeanNameGenerator.class.equals(generatorClass)) {
             scanner.setBeanNameGenerator((BeanNameGenerator)BeanUtils.instantiateClass(generatorClass));
         }
-        //重点，注册了MapperFactoryBean
+        //重点关注一下 MapperFactoryBean
         Class<? extends MapperFactoryBean> mapperFactoryBeanClass = annoAttrs.getClass("factoryBean");
         if (!MapperFactoryBean.class.equals(mapperFactoryBeanClass)) {
             scanner.setMapperFactoryBean((MapperFactoryBean)BeanUtils.instantiateClass(mapperFactoryBeanClass));
@@ -460,7 +460,8 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
             }
         }
 
-        scanner.registerFilters(); 
+        scanner.registerFilters();
+        //进入doScan方法查看逻辑
         scanner.doScan(StringUtils.toStringArray(basePackages));
     }
 
@@ -473,6 +474,80 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
     }
 }
 ```  
+现在进入ClassPathMapperScanner的doScan方法  
+```
+    public Set<BeanDefinitionHolder> doScan(String... basePackages) {
+        Set<BeanDefinitionHolder> beanDefinitions = super.doScan(basePackages);
+        if (beanDefinitions.isEmpty()) {
+            this.logger.warn("No MyBatis mapper was found in '" + Arrays.toString(basePackages) + "' package. Please check your configuration.");
+        } else {
+            //进入该方法
+            this.processBeanDefinitions(beanDefinitions);
+        }
+
+        return beanDefinitions;
+    }
+
+    private void processBeanDefinitions(Set<BeanDefinitionHolder> beanDefinitions) {
+        Iterator var3 = beanDefinitions.iterator();
+
+        while(var3.hasNext()) {
+            BeanDefinitionHolder holder = (BeanDefinitionHolder)var3.next();
+            GenericBeanDefinition definition = (GenericBeanDefinition)holder.getBeanDefinition();
+            if (this.logger.isDebugEnabled()) {
+                this.logger.debug("Creating MapperFactoryBean with name '" + holder.getBeanName() + "' and '" + definition.getBeanClassName() + "' mapperInterface");
+            }
+
+            definition.getConstructorArgumentValues().addGenericArgumentValue(definition.getBeanClassName());
+            //非常重要，这是我们前面重点关注的MapperFactoryBean 最终实际注册的对象就是MapperFactoryBean
+            definition.setBeanClass(this.mapperFactoryBean.getClass());
+            if (StringUtils.hasText(this.mapperHelperBeanName)) {
+                definition.getPropertyValues().add("mapperHelper", new RuntimeBeanReference(this.mapperHelperBeanName));
+            } else {
+                if (this.mapperHelper == null) {
+                    this.mapperHelper = new MapperHelper();
+                }
+
+                definition.getPropertyValues().add("mapperHelper", this.mapperHelper);
+            }
+
+            definition.getPropertyValues().add("addToConfig", this.addToConfig);
+            boolean explicitFactoryUsed = false;
+            if (StringUtils.hasText(this.sqlSessionFactoryBeanName)) {
+                definition.getPropertyValues().add("sqlSessionFactory", new RuntimeBeanReference(this.sqlSessionFactoryBeanName));
+                explicitFactoryUsed = true;
+            } else if (this.sqlSessionFactory != null) {
+                definition.getPropertyValues().add("sqlSessionFactory", this.sqlSessionFactory);
+                explicitFactoryUsed = true;
+            }
+
+            if (StringUtils.hasText(this.sqlSessionTemplateBeanName)) {
+                if (explicitFactoryUsed) {
+                    this.logger.warn("Cannot use both: sqlSessionTemplate and sqlSessionFactory together. sqlSessionFactory is ignored.");
+                }
+
+                definition.getPropertyValues().add("sqlSessionTemplate", new RuntimeBeanReference(this.sqlSessionTemplateBeanName));
+                explicitFactoryUsed = true;
+            } else if (this.sqlSessionTemplate != null) {
+                if (explicitFactoryUsed) {
+                    this.logger.warn("Cannot use both: sqlSessionTemplate and sqlSessionFactory together. sqlSessionFactory is ignored.");
+                }
+                //sqlSessionTemplate也非常重要，暂时不做讨论
+                definition.getPropertyValues().add("sqlSessionTemplate", this.sqlSessionTemplate);
+                explicitFactoryUsed = true;
+            }
+
+            if (!explicitFactoryUsed) {
+                if (this.logger.isDebugEnabled()) {
+                    this.logger.debug("Enabling autowire by type for MapperFactoryBean with name '" + holder.getBeanName() + "'.");
+                }
+
+                definition.setAutowireMode(2);
+            }
+        }
+
+    }
+```
 
 我们不继续深入，只需要知道这里会注册一个很重要的类MapperFactoryBean   
 ```
@@ -553,8 +628,7 @@ public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements Factor
 }
 
 ```  
-总结，spring利用了MapperFactoryBean，最终还是调用了sqlsession的getMapper返回了mapper的代理对象，但是这里的sqlsession并不是DefaultSqlSession，这个下次再讨论
-
+总结，spring利用了MapperFactoryBean，最终还是调用了sqlsession的getMapper返回了mapper的代理对象
 
 
 
