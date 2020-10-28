@@ -196,7 +196,7 @@ SqlSession session=factory.openSession();
 ```
 	public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler) throws SQLException {
         BoundSql boundSql = ms.getBoundSql(parameterObject);
-        //创建缓存key对象，这个CacheKey和一级缓存（本地缓存，sqlsession级别）有关，为什么说是sqlsession级别呢？我们稍后会看到关于它的用法
+        //创建缓存key对象，这个CacheKey与一级缓存（本地缓存，sqlsession级别，为什么说是sqlsession级别呢，我们稍后会看到关于它的用法）和二级缓存有关
         CacheKey key = this.createCacheKey(ms, parameterObject, rowBounds, boundSql);
         //进入重组的query方法
         return this.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
