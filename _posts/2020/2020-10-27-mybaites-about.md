@@ -30,7 +30,7 @@ SqlSession session=factory.openSession();
 
         DefaultSqlSession var8;
         try {
-        	//根据配置获取事务，其中事务的自动提交默认是false，当连续的操作数据中间出现错误时，修改的内容不会提交到数据库，需要手动commit.事务隔离级别默认是null
+            //根据配置获取事务，其中事务的自动提交默认是false，当连续的操作数据中间出现错误时，修改的内容不会提交到数据库，需要手动commit.事务隔离级别默认是null
             Environment environment = this.configuration.getEnvironment();
             TransactionFactory transactionFactory = this.getTransactionFactoryFromEnvironment(environment);
             tx = transactionFactory.newTransaction(environment.getDataSource(), level, autoCommit);
@@ -180,7 +180,7 @@ SqlSession session=factory.openSession();
         List var5;
         try {
             MappedStatement ms = this.configuration.getMappedStatement(statement);
-            //重点，这是进入查询的核心代码
+            //重点，这是进入查询的核心代码，这里 Executor.NO_RESULT_HANDLER是null
             var5 = this.executor.query(ms, this.wrapCollection(parameter), rowBounds, Executor.NO_RESULT_HANDLER);
         } catch (Exception var9) {
             throw ExceptionFactory.wrapException("Error querying database.  Cause: " + var9, var9);
@@ -219,7 +219,7 @@ SqlSession session=factory.openSession();
                 //先从二级缓存中获取，如果不存在则去查数据库，并且将其放入二级缓存中
                 List<E> list = (List)this.tcm.getObject(cache, key);
                 if (list == null) {
-                	//this.delegate指向被装饰的SimpleExecutor，SimpleExecutor又指向它的抽象类BaseExecutor
+                    //this.delegate指向被装饰的SimpleExecutor，SimpleExecutor又指向它的抽象类BaseExecutor
                     list = this.delegate.query(ms, parameterObject, rowBounds, resultHandler, key, boundSql);
                     //将结果放入二级缓存
                     this.tcm.putObject(cache, key, list);
@@ -252,10 +252,10 @@ SqlSession session=factory.openSession();
                 //resultHandler默认传过来的是null,所以会先获取一级缓存的数据，如果一级缓存没有，再去数据库查询
                 list = resultHandler == null ? (List)this.localCache.getObject(key) : null;
                 if (list != null) {
-                	//处理缓存数据，这里我们不深入查看
+                    //处理缓存数据，这里我们不深入查看
                     this.handleLocallyCachedOutputParameters(ms, key, parameter, boundSql);
                 } else {
-                	//从数据库获取数据,我们下面进入该方法  
+                    //从数据库获取数据,我们下面进入该方法  
                     list = this.queryFromDatabase(ms, parameter, rowBounds, resultHandler, key, boundSql);
                 }
             } finally {
@@ -291,12 +291,12 @@ SqlSession session=factory.openSession();
 
         List list;
         try {
-        	//查询数据库，具体的查询逻辑就是jdbc的查询逻辑，然后将结果进行属性映射
+            //查询数据库，具体的查询逻辑就是jdbc的查询逻辑，然后将结果进行属性映射
             list = this.doQuery(ms, parameter, rowBounds, resultHandler, boundSql);
         } finally {
             this.localCache.removeObject(key);
         }
-        重新放入一级缓存
+        //重新放入一级缓存
         this.localCache.putObject(key, list);
         //这边是放入另外一个缓存对象中，作用未知
         if (ms.getStatementType() == StatementType.CALLABLE) {
