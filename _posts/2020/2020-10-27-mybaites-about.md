@@ -208,7 +208,7 @@ SqlSession session=factory.openSession();
 ```
     public <E> List<E> query(MappedStatement ms, Object parameterObject, RowBounds rowBounds, ResultHandler resultHandler, CacheKey key, BoundSql boundSql) throws SQLException {
     	//获取二级缓存。MappedStatement中的cache属性，即mapper级别的缓存
-    	//TransactionalCacheManager类管理TransactionalCache类，而TransactionalCache修饰了实现Cache接口的类，并且每个TransactionalCache对应一个Cache的实现类，当commit时会调用每个TransactionalCache的commit方法，内部则会调用对应Cache的实现类的clear方法。Cache可由开发者自己实现，使用一些缓存中间件（可以看TransactionalCacheManager源码，本期不在流程内，暂不进行讨论）
+    	//TransactionalCacheManager类管理TransactionalCache类，而TransactionalCache修饰了实现Cache接口的类，并且每个TransactionalCache对应一个Cache的实现类，只有当commit时，数据才会存入Cache。Cache可由开发者自己实现，使用一些缓存中间件（可以看TransactionalCacheManager源码，本期不在流程内，暂不进行讨论）
         Cache cache = ms.getCache();
         if (cache != null) {
         	//如果存在二级缓存，并且mapper的<select>标签中的flushCache属性设置为true，则会清空二级缓存（直接查询数据库）
