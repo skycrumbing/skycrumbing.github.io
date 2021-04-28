@@ -12,6 +12,7 @@ description: 探索spring-rabbit的执行流程和重试机制
 ## spirng-rabbit   
 因为项目用到rabbit的地方比较多，所以逐步debug了spring中整合rabbit的执行流程方便以后更好的使用，并且加深对spring的了解。    
 <!-- more -->
+
 测试版本  
 ```
 <dependency>
@@ -427,8 +428,8 @@ protected void configure(T factory, ConnectionFactory connectionFactory, AmqpCon
 ```  
 初始化的部分先看到这里，接下来具体看发送和接收的执行流程。主要设计spring-rabbit组件。  
 
- ### 消息发送流程  
- 在测试项目中，发送消息的代码如下  
+### 消息发送流程  
+在测试项目中，发送消息的代码如下  
  ```
 @Component
 public class RabbitProducer {
@@ -568,25 +569,25 @@ public class RabbitProducer {
         return action.doInRabbit(channel);
     }
 ```  
- ### 消息接收流程  
- 测试项目中是通过 @RabbitListener来接收处理rabbit队列中的消息  
- ```
+### 消息接收流程  
+测试项目中是通过 @RabbitListener来接收处理rabbit队列中的消息  
+```
   @RabbitListener(queues = {RabbitConfig.ADQUEUE_SAVEEXPOSUREINFO})
     public void saveexposureinfo(String json) {
         log.error("接受失败");
         throw new CustomException("失败");
     }
- ``` 
- 显然这里应该有个RabbitListener注解的处理器将所有有该注解的方法通过反射获取，然后当消息接收到时再执行对应的方法。  
- 这里这个处理器就是org.springframework.amqp.rabbit.annotation.RabbitListenerAnnotationBeanPostProcessor   
- 它实现了BeanPostProcessor和SmartInitializingSingleton接口，当所有bean初始化完成后，会先执行BeanPostProcessor.postProcessAfterInitialization()这个方法，再执行SmartInitializingSingleton.afterSingletonsInstantiated()方法。     
- ```  
+``` 
+显然这里应该有个RabbitListener注解的处理器将所有有该注解的方法通过反射获取，然后当消息接收到时再执行对应的方法。  
+这里这个处理器就是org.springframework.amqp.rabbit.annotation.RabbitListenerAnnotationBeanPostProcessor   
+它实现了BeanPostProcessor和SmartInitializingSingleton接口，当所有bean初始化完成后，会先执行BeanPostProcessor.postProcessAfterInitialization()这个方法，再执行SmartInitializingSingleton.afterSingletonsInstantiated()方法。     
+```  
  public class RabbitListenerAnnotationBeanPostProcessor implements BeanPostProcessor, Ordered, BeanFactoryAware, BeanClassLoaderAware, EnvironmentAware, SmartInitializingSingleton {
    .....
 }
- ```
- 我们先看看postProcessBeforeInitialization方法   
- ```
+```
+我们先看看postProcessBeforeInitialization方法   
+```
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> targetClass = AopUtils.getTargetClass(bean);
         //通过该方法找出所有注解RabbitListener的方法，具体方法是buildMetadata()
@@ -613,7 +614,7 @@ public class RabbitProducer {
 
         return bean;
     }
- ``` 
+``` 
 跟进org.springframework.amqp.rabbit.annotation.RabbitListenerAnnotationBeanPostProcessor#buildMetadata查看具体获取注解  
 ```
     private RabbitListenerAnnotationBeanPostProcessor.TypeMetadata buildMetadata(Class<?> targetClass) {
