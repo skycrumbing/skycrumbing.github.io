@@ -736,7 +736,7 @@ public class RabbitProducer {
         }
     }
 ```
-根据org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry#registerListenerContainer(org.springframework.amqp.rabbit.listener.RabbitListenerEndpoint, org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory<?>, boolean)  
+根进org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry#registerListenerContainer(org.springframework.amqp.rabbit.listener.RabbitListenerEndpoint, org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory<?>, boolean)  
 ```
     public void registerListenerContainer(RabbitListenerEndpoint endpoint, RabbitListenerContainerFactory<?> factory, boolean startImmediately) {
         Assert.notNull(endpoint, "Endpoint must not be null");
@@ -1311,7 +1311,7 @@ org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#initia
         }
     }
 ```  
-###
+### 重试机制  
 刚才我们知道在执行proxy.invokeListener的时候，因为我们配置了重试机制，实际执行的方法是org.springframework.retry.interceptor.RetryOperationsInterceptor#invoke  
 ```
     public Object invoke(final MethodInvocation invocation) throws Throwable {
