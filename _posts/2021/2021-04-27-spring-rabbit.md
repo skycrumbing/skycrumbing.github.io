@@ -35,7 +35,7 @@ description: 探索spring-rabbit的执行流程和重试机制
     spring-retry有几个重要的类  
     BackOffPolicy：重试的回退策略，指以何种方式进行下一次重试（第一次重试后什么时候进行第二次重试），比如过了15秒后重试，随机时间重试。  
     RetryPolicy：重试策略或条件，可以指定超时重试，一直重试，简单重试等。  
-    MessageRecoverer：消息回收类，当所有的重试次数都失败后，就会调用该类的recover方法,在rabbit默认是org.springframework.amqp.rabbit.retry.RejectAndDontRequeueRecoverer。即失败了也不会再冲洗放入队列，直接channel.basicAck
+    MessageRecoverer：消息回收类，当所有的重试次数都失败后，就会调用该类的recover方法,在rabbit默认是org.springframework.amqp.rabbit.retry.RejectAndDontRequeueRecoverer。即失败了也不会再冲洗放入队列，直接channel.basicAck   
     RetryTemplate：组合了BackOffPolicy，RetryPolicy，RetryListener，执行重试步骤的具体类。  
     RetryOperationsInterceptor：方法执行失败的拦截器类，拦截失败后交给RertyTemplate去执行重试。  
     SimpleMessageListenerContainer：用于管理消费者。  
