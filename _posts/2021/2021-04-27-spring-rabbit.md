@@ -10,7 +10,7 @@ description: 探索spring-rabbit的执行流程和重试机制
 ---
 
 ## spirng-rabbit   
-因为项目用到rabbit的地方比较多，所以逐步debug了spring中整合rabbit的执行流程方便以后更好的使用，并且加深对spring的了解。    
+因为项目用到rabbit的地方比较多，所以逐步debug了spring中rabbit的执行流程加深理解和印象。    
 <!-- more -->
 
 ## 测试版本  
@@ -26,7 +26,6 @@ description: 探索spring-rabbit的执行流程和重试机制
 
 ## 消费失败的情况以及处理  
 在项目中用到消息队列最多的地方是异步通知和存储数据。异步通知的时候可能由于网络等外部因素失败，这种情况下就应该重复执行异步通知的方法，并且如果每次执行都失败，需要设置最多执行次数和每次执行的时间间隔。 
-org.springframework.amqp.rabbit.listener.BlockingQueueConsumer#rollbackOnExceptionIfNecessary 
 在测试项目中，按照最基本的配置（即只配置rabbit的连接信息）来进行消费测试，如果消费失败，代码会执行channel.basicNack(long deliveryTag, boolean multiple, boolean requeue)，默认requeue是true，所以会重新将消息放入队列，等着被重新消费。这样如果一直消费失败将会阻塞队列，造成生产事故。  
 如果想按照预期的目的（消费失败重试，并且限制次数和时间间隔），有两种实现方式：  
 1. 根据rabbit死信交换机(DLX dead-letter-exchange)的特性。  
@@ -40,8 +39,9 @@ org.springframework.amqp.rabbit.listener.BlockingQueueConsumer#rollbackOnExcepti
     RetryTemplate：组合了BackOffPolicy，RetryPolicy，RetryListener，执行重试步骤的具体类。  
     RetryOperationsInterceptor：方法执行失败的拦截器类，拦截失败后交给RertyTemplate去执行重试。  
     SimpleMessageListenerContainer：用于管理消费者。  
-    RetryListener：重试过程的监听器，第一次重试调用该类的open，每次重试不成功调用onError，最后一次重试调用close。  
-相比前一种，使用retry更加简单，只需要添加相应的配置信息即可，代码的侵入性很低。 我们现在就来看看该方式代码的执行逻辑。  
+    RetryListener：重试过程的监听器，第一次重试调用该类的open，每次重试不成功调用onError，最后一次重试调用close。 
+    
+**相比前一种，使用retry更加简单，只需要添加相应的配置信息即可，代码的侵入性很低。 我们现在就来看看该方式代码的执行逻辑。**  
 
 ## 测试项目rabbit的相关配置     
 ```
@@ -602,13 +602,13 @@ public class RabbitProducer {
 
             for(int var11 = 0; var11 < var10; ++var11) {
                 RabbitListener rabbitListener = var9[var11];
-                //该方法处理方法上的rabbitListener,我们稍后看看里面的执行逻辑
+                //该方法处理RabbitListener注解的方法,因为我们的测试代码是在方法上加入RabbitListener注解，所以会进入这个方法。我们稍后看看里面的执行逻辑
                 this.processAmqpListener(rabbitListener, lm.method, bean, beanName);
             }
         }
 
         if (metadata.handlerMethods.length > 0) {
-            //该方法处理方法上的rabbitHandler
+            //该方法处理RabbitHandler注解的方法
             this.processMultiMethodListeners(metadata.classAnnotations, metadata.handlerMethods, bean, beanName);
         }
 
