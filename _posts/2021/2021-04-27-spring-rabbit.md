@@ -62,7 +62,7 @@ spring:
 ```    
 ## 代码执行逻辑      
 
-### 首先先看看项目初始化做了什么  
+### 首先看看项目初始化做了什么  
 在springboot中，是通过spring-boot-autoconfigure实现自动装配的。即上面的配置信息是通过这个模块来进行相关bean的初始化的。  
 springboot通过/META-INF/spring.factories文件去加载的第三方jar包的bean。在spring-boot-autoconfigure中的/META-INF/spring.factories可以看到这些信息  
 ```
@@ -81,7 +81,7 @@ org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfigurat
 org.springframework.boot.autoconfigure.couchbase.CouchbaseAutoConfiguration,\
 
 ```  
-这边我只复制了部分代码，只需要知道这边加载了org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration。 
+这边我只复制了部分代码，只需要知道这里加载了org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration。 
 我们进入RabbitAutoConfiguration看看它实现了哪些方法。  
 ```
 /**
@@ -763,7 +763,7 @@ public class RabbitProducer {
             if (this.contextRefreshed) {
                 container.lazyLoad();
             }
-            //同样这边是启动Comtainer是SimpleMessageListenerContainer
+            //同样这里启动的Comtainer是SimpleMessageListenerContainer
             if (startImmediately) {
                 this.startIfNecessary(container);
             }
