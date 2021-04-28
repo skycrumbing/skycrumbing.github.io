@@ -13,7 +13,7 @@ description: 探索spring-rabbit的执行流程和重试机制
 因为项目用到rabbit的地方比较多，所以逐步debug了spring中整合rabbit的执行流程方便以后更好的使用，并且加深对spring的了解。    
 <!-- more -->
 
-测试版本  
+## 测试版本  
 ```
 <dependency>
     <groupId>org.springframework.boot</groupId>
