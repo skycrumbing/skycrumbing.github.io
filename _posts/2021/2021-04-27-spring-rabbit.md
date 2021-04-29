@@ -722,7 +722,9 @@ org.springframework.amqp.rabbit.connection.CorrelationData)
         this.registrar.registerEndpoint(endpoint, factory);
     }
 ```  
-跟进org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar#registerEndpoint(org.springframework.amqp.rabbit.listener.RabbitListenerEndpoint, org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory<?>)方法
+跟进org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar#registerEndpoint  
+(org.springframework.amqp.rabbit.listener.RabbitListenerEndpoint,  
+org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory<?>)方法
 ```
     public void registerEndpoint(RabbitListenerEndpoint endpoint, @Nullable RabbitListenerContainerFactory<?> factory) {
         Assert.notNull(endpoint, "Endpoint must be set");
