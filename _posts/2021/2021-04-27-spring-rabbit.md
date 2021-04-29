@@ -378,7 +378,9 @@ protected void configure(T factory, ConnectionFactory connectionFactory, AmqpCon
     }
 }
 ```
-进入org.springframework.boot.autoconfigure.amqp.AbstractRabbitListenerContainerFactoryConfigurer#configure(T, org.springframework.amqp.rabbit.connection.ConnectionFactory, org.springframework.boot.autoconfigure.amqp.RabbitProperties.AmqpContainer)方法  
+进入org.springframework.boot.autoconfigure.amqp.  
+AbstractRabbitListenerContainerFactoryConfigurer#configure(T,   
+org.springframework.amqp.rabbit.connection.ConnectionFactory, org.springframework.boot.autoconfigure.amqp.RabbitProperties.AmqpContainer)方法  
 ```
     /**
      * 这里的factory指的是SimpleRabbitListenerContainerFactory
@@ -444,7 +446,8 @@ public class RabbitProducer {
 }
 ```
 我们直接跟进具体实现的方法看看里面具体的逻辑  
-该方法是org.springframework.amqp.rabbit.core.RabbitTemplate#convertAndSend(java.lang.String, java.lang.String, java.lang.Object)  
+该方法是  
+org.springframework.amqp.rabbit.core.RabbitTemplate#convertAndSend(java.lang.String, java.lang.String, java.lang.Object)  
 ```
 //这边CorrelationData是和消息绑定关联的，方便之后进行重发报警
     public void convertAndSend(String exchange, String routingKey, Object object) throws AmqpException {
@@ -458,7 +461,9 @@ public class RabbitProducer {
         this.send(exchange, routingKey, this.convertMessageIfNecessary(object), correlationData);
     }
 ```  
-跟进org.springframework.amqp.rabbit.core.RabbitTemplate#send(java.lang.String, java.lang.String, org.springframework.amqp.core.Message, org.springframework.amqp.rabbit.connection.CorrelationData)  
+跟进org.springframework.amqp.rabbit.core.RabbitTemplate#  
+send(java.lang.String, java.lang.String, org.springframework.amqp.core.Message,   
+org.springframework.amqp.rabbit.connection.CorrelationData)  
 ```
 //这里真正开始执行发送操作，这里调用了org.springframework.amqp.rabbit.core.RabbitTemplate#execute(org.springframework.amqp.rabbit.core.ChannelCallback<T>, org.springframework.amqp.rabbit.connection.ConnectionFactory)  
 //传入了一个利用lambda实现了ChannelCallback接口的对象，该对象实现了org.springframework.amqp.rabbit.core.ChannelCallback#doInRabbit方法，下面代码中该方法调用了doSend发送消息，我们接下来看这个发送消息的逻辑什么时候执行。还传入了一个连接工厂获取一个rabbit连接
@@ -469,7 +474,8 @@ public class RabbitProducer {
         }, this.obtainTargetConnectionFactory(this.sendConnectionFactorySelectorExpression, message));
     }
 ```  
-跟进org.springframework.amqp.rabbit.core.RabbitTemplate#execute(org.springframework.amqp.rabbit.core.ChannelCallback<T>, org.springframework.amqp.rabbit.connection.ConnectionFactory)  
+跟进org.springframework.amqp.rabbit.core.RabbitTemplate#execute  
+(org.springframework.amqp.rabbit.core.ChannelCallback<T>, org.springframework.amqp.rabbit.connection.ConnectionFactory)   
 ```
     @Nullable
     private <T> T execute(ChannelCallback<T> action, ConnectionFactory connectionFactory) {
@@ -848,7 +854,8 @@ public class RabbitProducer {
         }
     }
 ```  
-跟进org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.AsyncMessageProcessingConsumer#run  
+跟进org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.  
+AsyncMessageProcessingConsumer#run  
 ```
         public void run() {
             if (SimpleMessageListenerContainer.this.isActive()) {
@@ -950,7 +957,8 @@ public class RabbitProducer {
             }
         }
 ```
-跟进org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.AsyncMessageProcessingConsumer#mainLoop  
+跟进org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer.  
+AsyncMessageProcessingConsumer#mainLoop  
 ```
             private void mainLoop() throws Exception {
             try {
@@ -1256,8 +1264,9 @@ org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#initia
         }
     }
 ```
-我们先前知道实现proxy.invokeListener的代码在actualInvokeListener方法。最后看看RetryOperationsInterceptor的invoke代理执行了些什么逻辑。  
-跟进org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#actualInvokeListener  
+我们先前知道实现proxy.invokeListener的代码在actualInvokeListener方法。我们先看看actualInvokeListener方法，最后看看RetryOperationsInterceptor的invoke代理执行了些什么逻辑。  
+跟进org.springframework.amqp.rabbit.listener.  
+AbstractMessageListenerContainer#actualInvokeListener  
 ```
     protected void actualInvokeListener(Channel channel, Object data) {
         Object listener = this.getMessageListener();
@@ -1292,7 +1301,8 @@ org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#initia
 
     }
 ```   
-跟进org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#doInvokeListener(org.springframework.amqp.core.MessageListener, java.lang.Object)  
+跟进org.springframework.amqp.rabbit.listener.  
+AbstractMessageListenerContainer#doInvokeListener(org.springframework.amqp.core.MessageListener, java.lang.Object)  
 ```
     protected void doInvokeListener(MessageListener listener, Object data) {
         Message message = null;
@@ -1312,7 +1322,8 @@ org.springframework.amqp.rabbit.listener.AbstractMessageListenerContainer#initia
     }
 ```  
 ### 重试机制  
-刚才我们知道在执行proxy.invokeListener的时候，因为我们配置了重试机制，实际执行的方法是org.springframework.retry.interceptor.RetryOperationsInterceptor#invoke  
+刚才我们知道在执行proxy.invokeListener的时候，因为我们配置了重试机制，实际执行的方法是  
+org.springframework.retry.interceptor.RetryOperationsInterceptor#invoke  
 ```
     public Object invoke(final MethodInvocation invocation) throws Throwable {
         final String name;
