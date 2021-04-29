@@ -69,7 +69,7 @@ SqlSession session=factory.openSession();
         if (this.cacheEnabled) {
             executor = new CachingExecutor((Executor)executor);
         }
-        //为开发人员提供定制开发插件（拦截器）的功能
+        //为开发人员提供定制开发插件的功能,通过层层代理把拦截器层层包裹
         Executor executor = (Executor)this.interceptorChain.pluginAll(executor);
         return executor;
     }
