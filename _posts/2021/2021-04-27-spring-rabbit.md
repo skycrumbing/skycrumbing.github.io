@@ -742,7 +742,9 @@ org.springframework.amqp.rabbit.connection.CorrelationData)
         }
     }
 ```
-根进org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry#registerListenerContainer(org.springframework.amqp.rabbit.listener.RabbitListenerEndpoint, org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory<?>, boolean)  
+根进org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistry#
+registerListenerContainer(org.springframework.amqp.rabbit.listener.RabbitListenerEndpoint, 
+org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory<?>, boolean)  
 ```
     public void registerListenerContainer(RabbitListenerEndpoint endpoint, RabbitListenerContainerFactory<?> factory, boolean startImmediately) {
         Assert.notNull(endpoint, "Endpoint must not be null");
